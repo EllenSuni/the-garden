@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
+import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
+
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import About from "./pages/About";
 
 function App() {
-  const [value, setValue] = useState<number>(1);
+  const router = createHashRouter([
+    {
+      children: [
+        { element: <Home />, path: "/" },
+        { element: <About />, path: "/About" },
+      ],
+      element: (
+        <>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+        </>
+      ),
+    },
+  ]);
 
-  const [name, setName] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3000/")
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        setName(result.name);
-      });
-  }, []);
-
-  return (
-    <div>
-      <h1>{value}</h1>
-      <button onClick={() => setValue(value + 1)}>Click</button>
-
-      <h4>{name}</h4>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
