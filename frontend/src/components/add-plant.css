@@ -1,0 +1,53 @@
+form {
+  color: #563623;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form h4 {
+  font-size: 20px;
+}
+form .disclaimer {
+  font-weight: 100;
+  font-style: italic;
+  font-size: 13px;
+  color: #967b6b;
+  margin-bottom: 7px;
+}
+form section {
+  margin-block: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form label {
+  font-weight: 700;
+  font-size: 15px;
+}
+form input,
+form select,
+form textarea {
+  background-color: #f2f1ef;
+  border: 2px solid #563623;
+  border-radius: 6px;
+  padding: 3px;
+}
+form input::-moz-placeholder, form select::-moz-placeholder, form textarea::-moz-placeholder {
+  color: #967b6b;
+}
+form input::placeholder,
+form select::placeholder,
+form textarea::placeholder {
+  color: #967b6b;
+}
+form .wrapper {
+  display: flex;
+  margin-bottom: 6px;
+}
+form .wrapper.label-over {
+  flex-direction: column;
+}
+form .wrapper.label-left {
+  align-items: center;
+  gap: 5px;
+}/*# sourceMappingURL=add-plant.css.map */

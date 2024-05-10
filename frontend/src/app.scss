@@ -1,17 +1,19 @@
+@import "./assets/variables";
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Spectral, sans-serif;
-  accent-color: #555c4c;
+  accent-color: $medium-green;
 }
 
 #body {
-  background-color: #f2f1ef;
+  background-color: $light-color;
   min-height: 100vh;
 }
 
 @font-face {
   font-family: Spectral;
   src: url(./assets/Spectral/Spectral-Regular.ttf) format("truetype");
-}/*# sourceMappingURL=app.css.map */
+}
