@@ -1,0 +1,57 @@
+.plant-card {
+  display: flex;
+  gap: 40px;
+  background-color: #f2f1ef;
+  border: 3px solid #b1a177;
+  border-radius: 20px;
+  padding: 46px 48px;
+}
+
+.plant-card__image {
+  width: 260px;
+  height: 340px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 2px solid #b1a177;
+  border-radius: 10px;
+}
+
+.plant-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  max-width: 400px;
+  width: 100%;
+}
+.plant-info__name {
+  font-weight: 800;
+  font-size: 30px;
+  color: #3e4635;
+}
+.plant-info__sci-name {
+  font-weight: 200;
+  font-style: italic;
+  font-size: 14px;
+  color: #555c4c;
+}
+.plant-info__care {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+.plant-info__care__heading {
+  font-weight: 700;
+  font-size: 20px;
+}
+.plant-info__care__timespan {
+  font-weight: 500;
+  font-size: 14px;
+}
+.plant-info__notes {
+  font-family: "Slackside One", cursive;
+  font-size: 18px;
+  width: 100%;
+  border: 1px solid #b1a177;
+  border-radius: 7px;
+  padding: 6px 13px 13px;
+}/*# sourceMappingURL=plant-card.css.map */

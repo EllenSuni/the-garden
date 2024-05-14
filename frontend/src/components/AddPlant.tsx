@@ -32,7 +32,7 @@ function AddPlant() {
   });
 
   function setMonth(month: string, title: string) {
-    console.log(title, month);
+    // console.log(title, month);
     if (title === "plantingTime") {
       setNewPlant({
         ...newPlant,

@@ -1,0 +1,61 @@
+@import "../assets/variables";
+
+.plant-card {
+  display: flex;
+  gap: 40px;
+  background-color: $light-color;
+  border: 3px solid $dark-yellow;
+  border-radius: 20px;
+  padding: 46px 48px;
+}
+
+.plant-card__image {
+  width: 260px;
+  height: 340px;
+  object-fit: cover;
+  border: 2px solid $dark-yellow;
+  border-radius: 10px;
+}
+
+.plant-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  max-width: 400px;
+  width: 100%;
+
+  &__name {
+    font-weight: 800;
+    font-size: 30px;
+    color: $dark-green;
+  }
+  &__sci-name {
+    font-weight: 200;
+    font-style: italic;
+    font-size: 14px;
+    color: $medium-green;
+  }
+  &__care {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+
+    &__heading {
+      font-weight: 700;
+      font-size: 20px;
+    }
+    &__timespan {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+  &__notes {
+    font-family: "Slackside One", cursive;
+    font-size: 18px;
+
+    width: 100%;
+    border: 1px solid $dark-yellow;
+    border-radius: 7px;
+    padding: 6px 13px 13px;
+  }
+}
