@@ -16,18 +16,18 @@ function MonthPicker(props: Month) {
         hidden>
         Välj en månad
       </option>
-      <option value="jan">Januari</option>
-      <option value="feb">Februari</option>
-      <option value="mar">Mars</option>
-      <option value="apr">April</option>
-      <option value="may">Maj</option>
-      <option value="jun">Juni</option>
-      <option value="jul">Juli</option>
-      <option value="aug">Augusti</option>
-      <option value="sep">September</option>
-      <option value="oct">Oktober</option>
-      <option value="nov">November</option>
-      <option value="dec">December</option>
+      <option value="Januari">Januari</option>
+      <option value="Februari">Februari</option>
+      <option value="Mars">Mars</option>
+      <option value="April">April</option>
+      <option value="Maj">Maj</option>
+      <option value="Juni">Juni</option>
+      <option value="Juli">Juli</option>
+      <option value="Augusti">Augusti</option>
+      <option value="September">September</option>
+      <option value="Oktober">Oktober</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
     </select>
   );
 }

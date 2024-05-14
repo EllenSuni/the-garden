@@ -1,11 +1,11 @@
 import AddPlant from "../components/AddPlant";
-import PlantCard from "../components/PlantCard";
+import PlantsRender from "../components/PlantsRender";
 
 function Home() {
   return (
     <>
       <h1>Hem</h1>
-      <PlantCard />
+      <PlantsRender />
       <AddPlant />
     </>
   );

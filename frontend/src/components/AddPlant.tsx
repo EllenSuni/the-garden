@@ -6,29 +6,24 @@
 import { useState } from "react";
 import MonthPicker from "./MonthPicker";
 import "./add-plant.css";
+import { PlantType } from "../interfaces";
 
 function AddPlant() {
-  const [newPlant, setNewPlant] = useState<{
-    plantName: string;
-    sciName?: string;
-    gardenArea: string;
-    needsDressing: boolean;
-    dressingTime?: string;
-    needsFertilizer: boolean;
-    fertilizerTime?: string;
-    needsTrimming: boolean;
-    trimmingTime?: string;
-    plantingMonth?: string;
-    plantingYear?: number;
-    bloomTime?: string;
-    harvestTime?: string;
-    notes?: string;
-  }>({
-    plantName: "",
-    gardenArea: "",
-    needsDressing: false,
-    needsFertilizer: false,
-    needsTrimming: false,
+  const [newPlant, setNewPlant] = useState<PlantType>({
+    plantname: "",
+    sciname: "",
+    gardenarea: "",
+    needsdressing: false,
+    dressingtime: "",
+    needsfertilizer: false,
+    fertilizertime: "",
+    needstrimming: false,
+    trimmingtime: "",
+    plantingmonth: "",
+    plantingyear: 0,
+    bloomtime: "",
+    harvesttime: "",
+    notes: "",
   });
 
   function setMonth(month: string, title: string) {
@@ -36,19 +31,19 @@ function AddPlant() {
     if (title === "plantingTime") {
       setNewPlant({
         ...newPlant,
-        plantingMonth: month,
+        plantingmonth: month,
       });
     }
     if (title === "bloomTime") {
       setNewPlant({
         ...newPlant,
-        bloomTime: month,
+        bloomtime: month,
       });
     }
     if (title === "harvestTime") {
       setNewPlant({
         ...newPlant,
-        harvestTime: month,
+        harvesttime: month,
       });
     }
   }
@@ -85,7 +80,7 @@ function AddPlant() {
               id="plantName"
               placeholder="Namn"
               onChange={(e) =>
-                setNewPlant({ ...newPlant, plantName: e.target.value })
+                setNewPlant({ ...newPlant, plantname: e.target.value })
               }
             />
           </div>
@@ -97,7 +92,7 @@ function AddPlant() {
               id="sciName"
               placeholder="Vetenskapligt namn"
               onChange={(e) =>
-                setNewPlant({ ...newPlant, sciName: e.target.value })
+                setNewPlant({ ...newPlant, sciname: e.target.value })
               }
             />
           </div>
@@ -107,7 +102,7 @@ function AddPlant() {
               name="gardenArea"
               id="gardenArea"
               onChange={(e) =>
-                setNewPlant({ ...newPlant, gardenArea: e.target.value })
+                setNewPlant({ ...newPlant, gardenarea: e.target.value })
               }>
               <option
                 value=""
@@ -132,21 +127,21 @@ function AddPlant() {
           <input
             type="checkbox"
             id="dressingCheckbox"
-            onChange={() =>
+            onChange={() => {
               setNewPlant({
                 ...newPlant,
-                needsDressing: !newPlant.needsDressing,
-              })
-            }
+                needsdressing: !newPlant.needsdressing,
+              });
+            }}
           />
-          {newPlant.needsDressing && (
+          {newPlant.needsdressing && (
             <input
               type="text"
               name="dressing"
               id="dressing"
               placeholder="När"
               onChange={(e) =>
-                setNewPlant({ ...newPlant, dressingTime: e.target.value })
+                setNewPlant({ ...newPlant, dressingtime: e.target.value })
               }
             />
           )}
@@ -159,18 +154,18 @@ function AddPlant() {
             onChange={() =>
               setNewPlant({
                 ...newPlant,
-                needsFertilizer: !newPlant.needsFertilizer,
+                needsfertilizer: !newPlant.needsfertilizer,
               })
             }
           />
-          {newPlant.needsFertilizer && (
+          {newPlant.needsfertilizer && (
             <input
               type="text"
               name="fertilizer"
               id="fertilizer"
               placeholder="När"
               onChange={(e) =>
-                setNewPlant({ ...newPlant, fertilizerTime: e.target.value })
+                setNewPlant({ ...newPlant, fertilizertime: e.target.value })
               }
             />
           )}
@@ -183,18 +178,18 @@ function AddPlant() {
             onChange={() =>
               setNewPlant({
                 ...newPlant,
-                needsTrimming: !newPlant.needsTrimming,
+                needstrimming: !newPlant.needstrimming,
               })
             }
           />
-          {newPlant.needsTrimming && (
+          {newPlant.needstrimming && (
             <input
               type="text"
               name="trimming"
               id="trimming"
               placeholder="När"
               onChange={(e) =>
-                setNewPlant({ ...newPlant, trimmingTime: e.target.value })
+                setNewPlant({ ...newPlant, trimmingtime: e.target.value })
               }
             />
           )}
@@ -219,7 +214,7 @@ function AddPlant() {
               onChange={(e) => {
                 setNewPlant({
                   ...newPlant,
-                  plantingYear: Number(e.target.value),
+                  plantingyear: Number(e.target.value),
                 });
               }}
             />
