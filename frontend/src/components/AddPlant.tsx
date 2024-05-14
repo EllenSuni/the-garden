@@ -1,6 +1,6 @@
 //. områden -> databasen; hämta och lägg i context
 //. lägg ihop saker och loopa (dry)
-//. setNewPlant i en egen funktion
+//. setNewPlant i en egen funktion (nope)
 //. felmeddelanden
 
 import { useState } from "react";

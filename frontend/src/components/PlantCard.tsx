@@ -16,15 +16,17 @@ function PlantCard({ plant }: PropsType) {
       />
       <div className="plant-info">
         <div>
+          {/* Färger!!! */}
+          <h4>{plant.gardenarea}</h4>
           <h2 className="plant-info__name">{plant.plantname}</h2>
-          {plant.sciname !== null && (
+          {plant.sciname && (
             <h6 className="plant-info__sci-name">"{plant.sciname}"</h6>
           )}
         </div>
         <div>
           {plant.needsfertilizer && (
             <div className="plant-info__care">
-              <h3 className="plant-info__care__heading">Gödsel</h3>
+              <h3 className="plan t-info__care__heading">Gödsel</h3>
               <p className="plant-info__care-timespan">
                 {plant.fertilizertime}
               </p>

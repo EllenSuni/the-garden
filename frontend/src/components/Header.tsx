@@ -9,7 +9,7 @@ function Header() {
             <Link to="/">Hem</Link>
           </li>
           <li>
-            <Link to="/about">Om oss</Link>
+            <Link to="/my-plants">Mina växter</Link>
           </li>
         </ul>
       </nav>
