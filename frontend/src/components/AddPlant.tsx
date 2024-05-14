@@ -1,3 +1,8 @@
+//. områden -> databasen; hämta och lägg i context
+//. lägg ihop saker och loopa (dry)
+//. setNewPlant i en egen funktion
+//. felmeddelanden
+
 import { useState } from "react";
 import MonthPicker from "./MonthPicker";
 import "./add-plant.css";
@@ -13,6 +18,11 @@ function AddPlant() {
     fertilizerTime?: string;
     needsTrimming: boolean;
     trimmingTime?: string;
+    plantingMonth?: string;
+    plantingYear?: number;
+    bloomTime?: string;
+    harvestTime?: string;
+    notes?: string;
   }>({
     plantName: "",
     gardenArea: "",
@@ -21,11 +31,46 @@ function AddPlant() {
     needsTrimming: false,
   });
 
+  function setMonth(month: string, title: string) {
+    console.log(title, month);
+    if (title === "plantingTime") {
+      setNewPlant({
+        ...newPlant,
+        plantingMonth: month,
+      });
+    }
+    if (title === "bloomTime") {
+      setNewPlant({
+        ...newPlant,
+        bloomTime: month,
+      });
+    }
+    if (title === "harvestTime") {
+      setNewPlant({
+        ...newPlant,
+        harvestTime: month,
+      });
+    }
+  }
+
+  function handleSubmit() {
+    console.log(newPlant);
+    try {
+      fetch("http://localhost:3000/add-plant", {
+        method: "POST",
+        body: JSON.stringify(newPlant),
+        headers: { "Content-type": "application/json" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log(newPlant);
+      onSubmit={(event) => {
+        event.preventDefault();
+        handleSubmit();
       }}>
       <h2>Lägg till växt</h2>
       <section>
@@ -160,7 +205,10 @@ function AddPlant() {
         <div className="label-over wrapper">
           <label htmlFor="plantingTime">Planterades</label>
           <div>
-            <MonthPicker />
+            <MonthPicker
+              setMonth={setMonth}
+              setTitle="plantingTime"
+            />
             <input
               type="number"
               min="1901"
@@ -168,16 +216,28 @@ function AddPlant() {
               name="plantingTime"
               id="plantingTime"
               placeholder="År"
+              onChange={(e) => {
+                setNewPlant({
+                  ...newPlant,
+                  plantingYear: Number(e.target.value),
+                });
+              }}
             />
           </div>
         </div>
         <div className="label-over wrapper">
           <label htmlFor="bloomTime">Blommar</label>
-          <MonthPicker />
+          <MonthPicker
+            setMonth={setMonth}
+            setTitle="bloomTime"
+          />
         </div>
         <div className="label-over wrapper">
           <label htmlFor="harvestTime">Skördas</label>
-          <MonthPicker />
+          <MonthPicker
+            setMonth={setMonth}
+            setTitle="harvestTime"
+          />
         </div>
         <div className="label-over wrapper">
           <label htmlFor="notes">Anteckning</label>
@@ -185,6 +245,12 @@ function AddPlant() {
             name="notes"
             id="notes"
             placeholder="Skriv anteckning här..."
+            onChange={(e) =>
+              setNewPlant({
+                ...newPlant,
+                notes: e.target.value,
+              })
+            }
           />
         </div>
       </section>

@@ -1,8 +1,14 @@
-function MonthPicker() {
+interface Month {
+  setMonth: (e: string, title: string) => void;
+  setTitle: string;
+}
+
+function MonthPicker(props: Month) {
   return (
     <select
       name=""
-      id="">
+      id=""
+      onChange={(e) => props.setMonth(e.target.value, props.setTitle)}>
       <option
         value=""
         disabled
