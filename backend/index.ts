@@ -26,7 +26,6 @@ app.get("/get-plants", async (_request, response) => {
   response.send(rows);
 });
 
-// Lägg till allt!
 app.post("/add-plant", async (request, response) => {
   console.log(request.body);
   await client.query(
