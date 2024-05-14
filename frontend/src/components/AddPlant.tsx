@@ -2,6 +2,7 @@
 //. lägg ihop saker och loopa (dry)
 //. setNewPlant i en egen funktion (nope)
 //. felmeddelanden
+//. töm form vid submit
 
 import { useState } from "react";
 import MonthPicker from "./MonthPicker";

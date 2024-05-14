@@ -1,16 +1,17 @@
 export interface PlantType {
+  plantid?: number;
   plantname: string;
-  sciname: string | null;
+  sciname: string;
   gardenarea: string;
   needsdressing: boolean;
-  dressingtime: string | null;
+  dressingtime: string;
   needsfertilizer: boolean;
-  fertilizertime: string | null;
+  fertilizertime: string;
   needstrimming: boolean;
-  trimmingtime: string | null;
+  trimmingtime: string;
   plantingmonth: string;
-  plantingyear: number | null;
-  bloomtime: string | null;
-  harvesttime: string | null;
-  notes: string | null;
+  plantingyear: number;
+  bloomtime: string;
+  harvesttime: string;
+  notes: string;
 }

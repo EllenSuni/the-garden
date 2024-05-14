@@ -20,9 +20,10 @@ function PlantsRender() {
     <>
       <h2>Växter</h2>
       {plants.map((plant) => (
-        <>
-          <PlantCard plant={plant} />
-        </>
+        <PlantCard
+          key={plant.plantid}
+          plant={plant}
+        />
       ))}
     </>
   );

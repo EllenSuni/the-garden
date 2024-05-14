@@ -18,6 +18,14 @@ function PlantCard({ plant }: PropsType) {
         <div>
           {/* Färger!!! */}
           <h4>{plant.gardenarea}</h4>
+          {(plant.plantingmonth || plant.plantingyear > 0) && (
+            <>
+              <h5>
+                Planterades: {plant.plantingmonth}{" "}
+                {plant.plantingyear > 1 ? plant.plantingyear : null}
+              </h5>
+            </>
+          )}
           <h2 className="plant-info__name">{plant.plantname}</h2>
           {plant.sciname && (
             <h6 className="plant-info__sci-name">"{plant.sciname}"</h6>
