@@ -1,8 +1,15 @@
 //. områden -> databasen; hämta och lägg i context
+//. gardenarea foreign key
 //. lägg ihop saker och loopa (dry)
+//. defaultValue on select - error
 //. setNewPlant i en egen funktion (nope)
 //. felmeddelanden
 //. töm form vid submit
+//. dela upp i tre "sidor"
+//. månad till månad
+
+//* kalender eller fritext?? går inte med båda
+//* lägg till skötselråd eller visa alla?
 
 import { useState } from "react";
 import MonthPicker from "./MonthPicker";

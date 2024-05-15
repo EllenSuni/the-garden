@@ -1,3 +1,16 @@
+export interface IPlant {
+  id: number;
+  name: string;
+  scientific_name: string;
+  planted: string;
+}
+
+export interface IAddPlant {
+  name: string;
+  scientific_name: string;
+  planted: string;
+}
+
 export interface PlantType {
   plantid?: number;
   plantname: string;
