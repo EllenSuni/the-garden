@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import dotenv from "dotenv";
 import { Client } from "pg";
 
-import { IPlant, IAddPlant } from "../frontend/src/interfaces";
+import { IPlant, IAddPlant, IFullPlant } from "./interfaces";
 
 dotenv.config();
 
@@ -19,11 +19,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// app.get("/", async (_request: Request, response: Response) => {
+//   const { rows }: { rows: IFullPlant[] } = await client.query(
+//     "SELECT plant.*, area.name, event.type, event.month, note.text FROM plant JOIN plant_area ON plant.id = plant_area.plant_id JOIN area ON area.id = plant_area.area_id LEFT JOIN event ON plant.id = event.plant_id LEFT JOIN note ON plant.id = note.plant_id"
+//   );
+
+//   response.send(rows);
+// });
+
 //. get all plants
 app.get("/get-plants", async (_request: Request, response: Response) => {
-  const { rows }: { rows: IPlant[] } = await client.query(
-    "SELECT * FROM plant"
+  const { rows }: { rows: IFullPlant[] } = await client.query(
+    "SELECT plant.*, area.name AS area , event.type, event.month, note.text FROM plant JOIN plant_area ON plant.id = plant_area.plant_id JOIN area ON area.id = plant_area.area_id LEFT JOIN event ON plant.id = event.plant_id LEFT JOIN note ON plant.id = note.plant_id"
   );
+  console.log(rows);
   response.send(rows);
 });
 
@@ -74,7 +83,7 @@ app.put("/edit-plant", async (request: Request, response: Response) => {
 
     const plant = getPlant.rows[0];
 
-    let nameUpdate = name ? name : plant.name,
+    const nameUpdate = name ? name : plant.name,
       scientific_nameUpdate = scientific_name
         ? scientific_name
         : plant.scientific_name,
@@ -91,26 +100,3 @@ app.put("/edit-plant", async (request: Request, response: Response) => {
 });
 
 app.listen(3000);
-
-//*
-let query = [],
-  queryValues = [];
-// if (name) {
-//   query.push(`name=$${query.length + 1}`);
-//   queryValues.push(`${name}`);
-// }
-// if (scientific_name) {
-//   query.push(`scientific_name=$${query.length + 1}`);
-//   queryValues.push(`${scientific_name}`);
-// }
-// if (planted) {
-//   query.push(`planted=$${query.length + 1}`);
-//   queryValues.push(`${planted}`);
-// }
-
-// const queryValuesS = queryValues.join(", ") + `, ${id}`;
-
-// const queryS = query.join(", ") + ` WHERE id=$${queryValues.length + 1}`;
-// `UPDATE plant SET ${queryS} RETURNING *`,
-// [queryValuesS]
-//*

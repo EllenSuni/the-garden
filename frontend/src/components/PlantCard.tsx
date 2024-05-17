@@ -1,12 +1,13 @@
 import "./plant-card.css";
 import blueberry from "../assets/images/blueberry-bush.jpg";
-import { PlantType } from "../interfaces";
+import { IFullPlant } from "../../../backend/interfaces";
 
 interface PropsType {
-  plant: PlantType;
+  plant: IFullPlant;
 }
 
 function PlantCard({ plant }: PropsType) {
+  console.log(plant);
   return (
     <section className="plant-card">
       <img
@@ -17,44 +18,25 @@ function PlantCard({ plant }: PropsType) {
       <div className="plant-info">
         <div>
           {/* Färger!!! */}
-          <h4>{plant.gardenarea}</h4>
-          {(plant.plantingmonth || plant.plantingyear > 0) && (
-            <>
-              <h5>
-                Planterades: {plant.plantingmonth}{" "}
-                {plant.plantingyear > 1 ? plant.plantingyear : null}
-              </h5>
-            </>
-          )}
-          <h2 className="plant-info__name">{plant.plantname}</h2>
-          {plant.sciname && (
-            <h6 className="plant-info__sci-name">"{plant.sciname}"</h6>
+          <h4>{plant.area}</h4>
+          {plant.planted && <h5>Planterades: {plant.planted}</h5>}
+          <h2 className="plant-info__name">{plant.name}</h2>
+          {plant.scientific_name && (
+            <h6 className="plant-info__sci-name">"{plant.scientific_name}"</h6>
           )}
         </div>
         <div>
-          {plant.needsfertilizer && (
-            <div className="plant-info__care">
-              <h3 className="plan t-info__care__heading">Gödsel</h3>
-              <p className="plant-info__care-timespan">
-                {plant.fertilizertime}
-              </p>
-            </div>
-          )}
-          {plant.needstrimming && (
-            <div className="plant-info__care">
-              <h3 className="plant-info__care__heading">Beskär</h3>
-              <p className="plant-info__care-timespan">{plant.trimmingtime}</p>
-            </div>
-          )}
-          {plant.needsdressing && (
-            <div className="plant-info__care">
-              <h3 className="plant-info__care__heading">Torv</h3>
-              <p className="plant-info__care-timespan">{plant.dressingtime}</p>
-            </div>
-          )}
+          <div className="plant-info__care">
+            <h3 className="plan t-info__care__heading">
+              <mark>Event-typ</mark>
+            </h3>
+            <p className="plant-info__care-timespan">
+              <mark>Månad</mark>
+            </p>
+          </div>
         </div>
         <div>
-          {plant.bloomtime && (
+          {/* {plant.bloomtime && (
             <div className="plant-info__care">
               <h3 className="plant-info__care__heading">Blommar</h3>
               <p className="plant-info__care-timespan">{plant.bloomtime}</p>
@@ -65,9 +47,9 @@ function PlantCard({ plant }: PropsType) {
               <h3 className="plant-info__care__heading">Skördas</h3>
               <p className="plant-info__care-timespan">{plant.harvesttime}</p>
             </div>
-          )}
+          )} */}
         </div>
-        {plant.notes && <p className="plant-info__notes">{plant.notes}</p>}
+        {plant.text && <p className="plant-info__notes">{plant.text}</p>}
       </div>
     </section>
   );

@@ -2,26 +2,28 @@ import { useEffect, useState } from "react";
 
 import PlantCard from "./PlantCard";
 
-import { PlantType } from "../interfaces";
+import { IFullPlant } from "../../../backend/interfaces";
 
 function PlantsRender() {
-  const [plants, setPlants] = useState<PlantType[]>([]);
+  const [plants, setPlants] = useState<IFullPlant[]>([]);
+
   useEffect(() => {
     fetch("http://localhost:3000/get-plants")
       .then((response) => response.json())
-      .then((result: PlantType[]) => {
+      .then((result: IFullPlant[]) => {
         setPlants(result);
+        console.log(result);
       });
   }, []);
 
-  console.log(plants);
+  // console.log(plants);
 
   return (
     <>
       <h2>Växter</h2>
       {plants.map((plant) => (
         <PlantCard
-          key={plant.plantid}
+          key={plant.id}
           plant={plant}
         />
       ))}

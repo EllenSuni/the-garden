@@ -1,5 +1,3 @@
-//. områden -> databasen; hämta och lägg i context
-//. gardenarea foreign key
 //. lägg ihop saker och loopa (dry)
 //. defaultValue on select - error
 //. setNewPlant i en egen funktion (nope)
@@ -14,59 +12,35 @@
 import { useState } from "react";
 import MonthPicker from "./MonthPicker";
 import "./add-plant.css";
-import { PlantType } from "../interfaces";
+import { IPlant } from "../../../backend/interfaces";
 
 function AddPlant() {
-  const [newPlant, setNewPlant] = useState<PlantType>({
-    plantname: "",
-    sciname: "",
-    gardenarea: "",
-    needsdressing: false,
-    dressingtime: "",
-    needsfertilizer: false,
-    fertilizertime: "",
-    needstrimming: false,
-    trimmingtime: "",
-    plantingmonth: "",
-    plantingyear: 0,
-    bloomtime: "",
-    harvesttime: "",
-    notes: "",
-  });
+  const [newPlant, setNewPlant] = useState<IPlant>();
 
   function setMonth(month: string, title: string) {
     // console.log(title, month);
     if (title === "plantingTime") {
-      setNewPlant({
-        ...newPlant,
-        plantingmonth: month,
-      });
+      console.log(month);
     }
     if (title === "bloomTime") {
-      setNewPlant({
-        ...newPlant,
-        bloomtime: month,
-      });
+      console.log(month);
     }
     if (title === "harvestTime") {
-      setNewPlant({
-        ...newPlant,
-        harvesttime: month,
-      });
+      console.log(month);
     }
   }
 
   function handleSubmit() {
     console.log(newPlant);
-    try {
-      fetch("http://localhost:3000/add-plant", {
-        method: "POST",
-        body: JSON.stringify(newPlant),
-        headers: { "Content-type": "application/json" },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   fetch("http://localhost:3000/add-plant", {
+    //     method: "POST",
+    //     body: JSON.stringify(newPlant),
+    //     headers: { "Content-type": "application/json" },
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   return (
@@ -87,9 +61,6 @@ function AddPlant() {
               name="plantName"
               id="plantName"
               placeholder="Namn"
-              onChange={(e) =>
-                setNewPlant({ ...newPlant, plantname: e.target.value })
-              }
             />
           </div>
           <div className="label-over wrapper">
@@ -99,19 +70,13 @@ function AddPlant() {
               name="sciName"
               id="sciName"
               placeholder="Vetenskapligt namn"
-              onChange={(e) =>
-                setNewPlant({ ...newPlant, sciname: e.target.value })
-              }
             />
           </div>
           <div className="label-over wrapper">
             <label htmlFor="gardenArea">Område *</label>
             <select
               name="gardenArea"
-              id="gardenArea"
-              onChange={(e) =>
-                setNewPlant({ ...newPlant, gardenarea: e.target.value })
-              }>
+              id="gardenArea">
               <option
                 value=""
                 disabled
@@ -135,72 +100,42 @@ function AddPlant() {
           <input
             type="checkbox"
             id="dressingCheckbox"
-            onChange={() => {
-              setNewPlant({
-                ...newPlant,
-                needsdressing: !newPlant.needsdressing,
-              });
-            }}
           />
-          {newPlant.needsdressing && (
-            <input
-              type="text"
-              name="dressing"
-              id="dressing"
-              placeholder="När"
-              onChange={(e) =>
-                setNewPlant({ ...newPlant, dressingtime: e.target.value })
-              }
-            />
-          )}
+
+          <input
+            type="text"
+            name="dressing"
+            id="dressing"
+            placeholder="När"
+          />
         </div>
         <div className="label-left wrapper">
           <label htmlFor="fertilizerCheckbox">Gödsel</label>
           <input
             type="checkbox"
             id="fertilizerCheckbox"
-            onChange={() =>
-              setNewPlant({
-                ...newPlant,
-                needsfertilizer: !newPlant.needsfertilizer,
-              })
-            }
           />
-          {newPlant.needsfertilizer && (
-            <input
-              type="text"
-              name="fertilizer"
-              id="fertilizer"
-              placeholder="När"
-              onChange={(e) =>
-                setNewPlant({ ...newPlant, fertilizertime: e.target.value })
-              }
-            />
-          )}
+
+          <input
+            type="text"
+            name="fertilizer"
+            id="fertilizer"
+            placeholder="När"
+          />
         </div>
         <div className="label-left wrapper">
           <label htmlFor="trimmingCheckbox">Beskärning</label>
           <input
             type="checkbox"
             id="trimmingCheckbox"
-            onChange={() =>
-              setNewPlant({
-                ...newPlant,
-                needstrimming: !newPlant.needstrimming,
-              })
-            }
           />
-          {newPlant.needstrimming && (
-            <input
-              type="text"
-              name="trimming"
-              id="trimming"
-              placeholder="När"
-              onChange={(e) =>
-                setNewPlant({ ...newPlant, trimmingtime: e.target.value })
-              }
-            />
-          )}
+
+          <input
+            type="text"
+            name="trimming"
+            id="trimming"
+            placeholder="När"
+          />
         </div>
       </section>
       <section>
@@ -219,12 +154,6 @@ function AddPlant() {
               name="plantingTime"
               id="plantingTime"
               placeholder="År"
-              onChange={(e) => {
-                setNewPlant({
-                  ...newPlant,
-                  plantingyear: Number(e.target.value),
-                });
-              }}
             />
           </div>
         </div>
@@ -248,12 +177,6 @@ function AddPlant() {
             name="notes"
             id="notes"
             placeholder="Skriv anteckning här..."
-            onChange={(e) =>
-              setNewPlant({
-                ...newPlant,
-                notes: e.target.value,
-              })
-            }
           />
         </div>
       </section>
