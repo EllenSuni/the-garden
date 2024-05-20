@@ -19,6 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//. get all plants
 app.get("/get-plants", async (_request: Request, response: Response) => {
   const plants: {
     rows: { id: number; name: string; scientific_name: string; text: string }[];
@@ -41,39 +42,25 @@ app.get("/get-plants", async (_request: Request, response: Response) => {
         areas.push(area.area);
       });
 
+      const events: { rows: IEvent[] } = await client.query(
+        "SELECT * FROM event WHERE plant_id=$1",
+        [plant.id]
+      );
+
       let plantItem: IFullPlant = {
         id: plant.id,
         name: plant.name,
         scientific_name: plant.scientific_name,
         text: plant.text,
         area: areas,
+        event: events.rows,
       };
+      console.log(plantItem);
 
       return plantItem;
     })
-  ).then((plantsArray) => response.send(plantsArray));
-
-  // const events: { rows: IEvent[] } = await client.query(
-  //   "SELECT * FROM event WHERE plant_id=$1",
-  //   [6]
-  // );
-
-  // response.send(plantsArray);
+  ).then((plantItem) => response.send(plantItem));
 });
-
-//. get all plants
-// app.get("/get-plants", async (_request: Request, response: Response) => {
-//   const {
-//     rows,
-//   }: {
-//     rows: { id: number; name: string; scientific_name: string; text: string }[];
-//   } = await client.query(
-//     "SELECT plant.*, note.text FROM plant LEFT JOIN note ON plant.id = note.plant_id"
-//   );
-
-//   // console.log();
-//   response.send(rows);
-// });
 
 //. add plant
 app.post("/add-plant", async (request: Request, response: Response) => {

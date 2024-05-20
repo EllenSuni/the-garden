@@ -30,6 +30,6 @@ export interface INote {
 
 export interface IFullPlant extends IPlant {
   area: string[];
-  // event: IEvent[];
+  event: { type: string; month: number }[];
   text: string;
 }

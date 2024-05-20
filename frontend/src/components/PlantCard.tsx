@@ -27,29 +27,14 @@ function PlantCard({ plant }: PropsType) {
             <h6 className="plant-info__sci-name">"{plant.scientific_name}"</h6>
           )}
         </div>
+
         <div>
-          <div className="plant-info__care">
-            <h3 className="plan t-info__care__heading">
-              <mark>Event-typ</mark>
-            </h3>
-            <p className="plant-info__care-timespan">
-              <mark>Månad</mark>
-            </p>
-          </div>
-        </div>
-        <div>
-          {/* {plant.bloomtime && (
+          {plant.event.map((value) => (
             <div className="plant-info__care">
-              <h3 className="plant-info__care__heading">Blommar</h3>
-              <p className="plant-info__care-timespan">{plant.bloomtime}</p>
+              <h3 className="plant-info__care__heading">{value.type}</h3>
+              <p className="plant-info__care-timespan">{value.month}</p>
             </div>
-          )}
-          {plant.harvesttime && (
-            <div className="plant-info__care">
-              <h3 className="plant-info__care__heading">Skördas</h3>
-              <p className="plant-info__care-timespan">{plant.harvesttime}</p>
-            </div>
-          )} */}
+          ))}
         </div>
         {plant.text && <p className="plant-info__notes">{plant.text}</p>}
       </div>
