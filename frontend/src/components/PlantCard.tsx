@@ -18,9 +18,9 @@ function PlantCard({ plant }: PropsType) {
       <div className="plant-info">
         <div>
           {/* Färger!!! */}
-          <h4>
-            <mark>Område</mark>
-          </h4>
+          {plant.area.map((value) => (
+            <h4 key={value}>{value}</h4>
+          ))}
 
           <h2 className="plant-info__name">{plant.name}</h2>
           {plant.scientific_name && (

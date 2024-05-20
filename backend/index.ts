@@ -19,7 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", async (_request: Request, response: Response) => {
+app.get("/get-plants", async (_request: Request, response: Response) => {
   const plants: {
     rows: { id: number; name: string; scientific_name: string; text: string }[];
   } = await client.query(
@@ -62,18 +62,18 @@ app.get("/", async (_request: Request, response: Response) => {
 });
 
 //. get all plants
-app.get("/get-plants", async (_request: Request, response: Response) => {
-  const {
-    rows,
-  }: {
-    rows: { id: number; name: string; scientific_name: string; text: string }[];
-  } = await client.query(
-    "SELECT plant.*, note.text FROM plant LEFT JOIN note ON plant.id = note.plant_id"
-  );
+// app.get("/get-plants", async (_request: Request, response: Response) => {
+//   const {
+//     rows,
+//   }: {
+//     rows: { id: number; name: string; scientific_name: string; text: string }[];
+//   } = await client.query(
+//     "SELECT plant.*, note.text FROM plant LEFT JOIN note ON plant.id = note.plant_id"
+//   );
 
-  // console.log();
-  response.send(rows);
-});
+//   // console.log();
+//   response.send(rows);
+// });
 
 //. add plant
 app.post("/add-plant", async (request: Request, response: Response) => {
