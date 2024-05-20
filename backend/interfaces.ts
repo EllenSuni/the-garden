@@ -2,7 +2,6 @@ export interface IPlant {
   id: number;
   name: string;
   scientific_name: string;
-  planted: string;
 }
 
 export interface IAddPlant {
@@ -30,7 +29,7 @@ export interface INote {
 }
 
 export interface IFullPlant extends IPlant {
-  area: string;
-  event: IEvent[];
+  area: string[];
+  // event: IEvent[];
   text: string;
 }

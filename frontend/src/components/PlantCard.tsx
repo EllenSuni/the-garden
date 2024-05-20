@@ -18,8 +18,10 @@ function PlantCard({ plant }: PropsType) {
       <div className="plant-info">
         <div>
           {/* Färger!!! */}
-          <h4>{plant.area}</h4>
-          {plant.planted && <h5>Planterades: {plant.planted}</h5>}
+          <h4>
+            <mark>Område</mark>
+          </h4>
+
           <h2 className="plant-info__name">{plant.name}</h2>
           {plant.scientific_name && (
             <h6 className="plant-info__sci-name">"{plant.scientific_name}"</h6>
