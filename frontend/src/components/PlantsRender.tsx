@@ -12,11 +12,8 @@ function PlantsRender() {
       .then((response) => response.json())
       .then((result: IFullPlant[]) => {
         setPlants(result);
-        console.log(result);
       });
   }, []);
-
-  // console.log(plants);
 
   return (
     <>

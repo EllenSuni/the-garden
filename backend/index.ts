@@ -55,7 +55,6 @@ app.get("/get-plants", async (_request: Request, response: Response) => {
         area: areas,
         event: events.rows,
       };
-      console.log(plantItem);
 
       return plantItem;
     })

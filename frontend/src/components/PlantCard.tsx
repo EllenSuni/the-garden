@@ -7,7 +7,47 @@ interface PropsType {
 }
 
 function PlantCard({ plant }: PropsType) {
-  console.log(plant);
+  plant.event.forEach((event) => {
+    switch (event.month) {
+      case 1:
+        event.month = "Januari";
+        break;
+      case 2:
+        event.month = "Februari";
+        break;
+      case 3:
+        event.month = "Mars";
+        break;
+      case 4:
+        event.month = "April";
+        break;
+      case 5:
+        event.month = "Maj";
+        break;
+      case 6:
+        event.month = "Juni";
+        break;
+      case 7:
+        event.month = "Juli";
+        break;
+      case 8:
+        event.month = "Augisti";
+        break;
+      case 9:
+        event.month = "September";
+        break;
+      case 10:
+        event.month = "Oktober";
+        break;
+      case 11:
+        event.month = "November";
+        break;
+      case 12:
+        event.month = "December";
+        break;
+    }
+  });
+
   return (
     <section className="plant-card">
       <img
@@ -30,7 +70,9 @@ function PlantCard({ plant }: PropsType) {
 
         <div>
           {plant.event.map((value) => (
-            <div className="plant-info__care">
+            <div
+              className="plant-info__care"
+              key={value.type}>
               <h3 className="plant-info__care__heading">{value.type}</h3>
               <p className="plant-info__care-timespan">{value.month}</p>
             </div>

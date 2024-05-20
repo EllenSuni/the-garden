@@ -11,7 +11,6 @@ export interface IAddPlant {
 }
 
 export interface IEvent {
-  id: number;
   type: string;
   month: number;
   plant_id: number;
@@ -30,6 +29,6 @@ export interface INote {
 
 export interface IFullPlant extends IPlant {
   area: string[];
-  event: { type: string; month: number }[];
+  event: { type: string; month: number | string }[];
   text: string;
 }
