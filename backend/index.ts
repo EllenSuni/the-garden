@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 //. get all plants
-app.get("/get-plants", async (_request: Request, response: Response) => {
+app.get("/get-plants", async (_request, response) => {
   const plants: {
     rows: { id: number; name: string; scientific_name: string; text: string }[];
   } = await client.query(
@@ -43,7 +43,7 @@ app.get("/get-plants", async (_request: Request, response: Response) => {
       });
 
       const events: { rows: IEvent[] } = await client.query(
-        "SELECT * FROM event WHERE plant_id=$1",
+        "SELECT type, month FROM event WHERE plant_id=$1",
         [plant.id]
       );
 
@@ -62,18 +62,33 @@ app.get("/get-plants", async (_request: Request, response: Response) => {
 });
 
 //. add plant
-app.post("/add-plant", async (request: Request, response: Response) => {
-  const { name, scientific_name }: IAddPlant = request.body;
+app.post("/add-plant", async (request, response) => {
+  const addPlant: { rows: { id: number }[] } = await client.query(
+    "INSERT INTO plant (name, scientific_name) VALUES ($1, $2) RETURNING id",
+    [request.body.name, request.body.scientific_name]
+  );
 
-  try {
+  await client.query("INSERT INTO note (plant_id, text) VALUES ($1, $2)", [
+    addPlant.rows[0].id,
+    request.body.text,
+  ]);
+
+  request.body.event.forEach(async (event: { type: string; month: number }) => {
     await client.query(
-      "INSERT INTO plant (name, scientific_name) VALUES ($1, $2, $3)",
-      [name, scientific_name]
+      "INSERT INTO event (type, month, plant_id) VALUES ($1, $2, $3)",
+      [event.type, event.month, addPlant.rows[0].id]
     );
-    response.status(201).send(`${name} is added`);
-  } catch (error) {
-    response.status(400).send(error);
-  }
+  });
+
+  request.body.area.forEach(async (area: number) => {
+    await client.query("INSERT INTO plant_area VALUES ($1, $2)", [
+      addPlant.rows[0].id,
+      area,
+    ]);
+  });
+
+  // console.log(events);
+  response.send(request.body);
 });
 
 //. delete plant
@@ -123,5 +138,29 @@ app.delete("/delete-plant", async (request: Request, response: Response) => {
 //     response.send(error);
 //   }
 // });
+
+app.get("/area", async (_request: Request, response: Response) => {
+  try {
+    const { rows }: { rows: IArea[] } = await client.query(
+      "SELECT * FROM area"
+    );
+
+    response.send(rows);
+  } catch (error) {
+    response.send(error);
+  }
+});
+
+app.post("/area", async (request: Request, response: Response) => {
+  try {
+    const { rows }: { rows: IArea[] } = await client.query(
+      "INSERT INTO area (name) VALUES ($1) RETURNING *",
+      [request.body.name]
+    );
+    response.status(201).send(rows);
+  } catch (error) {
+    response.status(400).send();
+  }
+});
 
 app.listen(3000);

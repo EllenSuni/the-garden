@@ -32,6 +32,11 @@ form textarea {
   border-radius: 6px;
   padding: 3px;
 }
+form input[multiple],
+form select[multiple],
+form textarea[multiple] {
+  height: 120px;
+}
 form input::-moz-placeholder, form select::-moz-placeholder, form textarea::-moz-placeholder {
   color: #967b6b;
 }

@@ -38,6 +38,10 @@ form {
     border-radius: 6px;
     padding: 3px;
 
+    &[multiple] {
+      height: 120px;
+    }
+
     &::placeholder {
       color: $light-red;
     }

@@ -32,3 +32,11 @@ export interface IFullPlant extends IPlant {
   event: { type: string; month: number | string }[];
   text: string;
 }
+
+export interface INewPlant {
+  name?: string;
+  scientific_name?: string;
+  text?: string;
+  area?: number[];
+  event?: { type: string; month: number | string }[];
+}

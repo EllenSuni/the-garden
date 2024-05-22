@@ -9,26 +9,50 @@
 //* kalender eller fritext?? går inte med båda
 //* lägg till skötselråd eller visa alla?
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MonthPicker from "./MonthPicker";
 import "./add-plant.css";
-import { IPlant } from "../../../backend/interfaces";
+import { INewPlant, IArea } from "../../../backend/interfaces";
 
 function AddPlant() {
-  const [newPlant, setNewPlant] = useState<IPlant>();
+  const [newPlant, setNewPlant] = useState<INewPlant>(),
+    [areas, setAreas] = useState<IArea[]>([]);
 
   function setMonth(month: string, title: string) {
-    // console.log(title, month);
-    if (title === "plantingTime") {
-      console.log(month);
-    }
-    if (title === "bloomTime") {
-      console.log(month);
-    }
-    if (title === "harvestTime") {
-      console.log(month);
-    }
+    setPlant(title, month);
   }
+
+  useEffect(() => {
+    fetch("http://localhost:3000/area")
+      .then((response) => response.json())
+      .then((result) => {
+        setAreas(result);
+      });
+  }, []);
+
+  function setPlant(title: string, value: string | number) {
+    console.log(title, value);
+    setNewPlant({ ...newPlant, [title]: value });
+  }
+
+  const [newPlantAreas, setNewPlantAreas] = useState([]);
+  // let newPlantAreas: INewPlant["area"];
+  function setArea(id: string, isChecked: boolean) {
+    console.log(id, isChecked);
+    id = id.replace("areaCheckbox", "");
+    if (isChecked) {
+      setNewPlantAreas([...newPlantAreas, Number(id)]);
+      newPlantAreas!.push(Number(id));
+    } else {
+      // console.log();
+      newPlantAreas.splice(newPlantAreas!.indexOf(Number(id)), 1);
+    }
+
+    console.log(newPlantAreas);
+    setNewPlant({ ...newPlant, area: newPlantAreas });
+  }
+  // console.log("51", newPlantAreas);
+  console.log(newPlant);
 
   function handleSubmit() {
     console.log(newPlant);
@@ -55,41 +79,45 @@ function AddPlant() {
         <p className="disclaimer">Fält markerade med * är obligatoriska</p>
         <div>
           <div className="label-over wrapper">
-            <label htmlFor="plantName">Namn *</label>
+            <label htmlFor="name">Namn *</label>
             <input
               type="text"
-              name="plantName"
-              id="plantName"
+              name="name"
+              id="name"
               placeholder="Namn"
+              onChange={(e) =>
+                setNewPlant({ ...newPlant, [e.target.id]: e.target.value })
+              }
             />
           </div>
           <div className="label-over wrapper">
-            <label htmlFor="sciName">Vetenskapligt namn</label>
+            <label htmlFor="scientific_name">Vetenskapligt namn</label>
             <input
               type="text"
-              name="sciName"
-              id="sciName"
+              name="scientific_name"
+              id="scientific_name"
               placeholder="Vetenskapligt namn"
+              onChange={(e) =>
+                setNewPlant({ ...newPlant, [e.target.id]: e.target.value })
+              }
             />
           </div>
           <div className="label-over wrapper">
             <label htmlFor="gardenArea">Område *</label>
-            <select
-              name="gardenArea"
-              id="gardenArea">
-              <option
-                value=""
-                disabled
-                selected
-                hidden>
-                Välj ett område
-              </option>
-              <option value="area1">Skogsträdgården</option>
-              <option value="area2">Dammen</option>
-              <option value="area3">Blomsterhavet</option>
-              <option value="area4">Berget</option>
-              <option value="area5">Odlingen</option>
-            </select>
+            <p className="disclaimer">Välj ett eller flera områden</p>
+
+            {areas!.map((area) => (
+              <div
+                className="label-left wrapper"
+                key={area.id}>
+                <label htmlFor={`areaCheckbox${area.id}`}>{area.name}</label>
+                <input
+                  type="checkbox"
+                  id={`areaCheckbox${area.id}`}
+                  onChange={(e) => setArea(e.target.id, e.target.checked)}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -101,12 +129,9 @@ function AddPlant() {
             type="checkbox"
             id="dressingCheckbox"
           />
-
-          <input
-            type="text"
-            name="dressing"
-            id="dressing"
-            placeholder="När"
+          <MonthPicker
+            setMonth={setMonth}
+            setTitle="dressingMonth"
           />
         </div>
         <div className="label-left wrapper">
@@ -116,47 +141,27 @@ function AddPlant() {
             id="fertilizerCheckbox"
           />
 
-          <input
-            type="text"
-            name="fertilizer"
-            id="fertilizer"
-            placeholder="När"
+          <MonthPicker
+            setMonth={setMonth}
+            setTitle="fertilizerMonth"
           />
         </div>
         <div className="label-left wrapper">
-          <label htmlFor="trimmingCheckbox">Beskärning</label>
+          <label htmlFor="pruningCheckbox">Beskärning</label>
           <input
             type="checkbox"
-            id="trimmingCheckbox"
+            id="pruningCheckbox"
           />
 
-          <input
-            type="text"
-            name="trimming"
-            id="trimming"
-            placeholder="När"
+          <MonthPicker
+            setMonth={setMonth}
+            setTitle="pruningMonth"
           />
         </div>
       </section>
       <section>
         <h4>Kuriosa</h4>
-        <div className="label-over wrapper">
-          <label htmlFor="plantingTime">Planterades</label>
-          <div>
-            <MonthPicker
-              setMonth={setMonth}
-              setTitle="plantingTime"
-            />
-            <input
-              type="number"
-              min="1901"
-              max="2099"
-              name="plantingTime"
-              id="plantingTime"
-              placeholder="År"
-            />
-          </div>
-        </div>
+
         <div className="label-over wrapper">
           <label htmlFor="bloomTime">Blommar</label>
           <MonthPicker
@@ -172,11 +177,14 @@ function AddPlant() {
           />
         </div>
         <div className="label-over wrapper">
-          <label htmlFor="notes">Anteckning</label>
+          <label htmlFor="text">Anteckning</label>
           <textarea
-            name="notes"
-            id="notes"
+            name="text"
+            id="text"
             placeholder="Skriv anteckning här..."
+            onChange={(e) =>
+              setNewPlant({ ...newPlant, [e.target.id]: e.target.value })
+            }
           />
         </div>
       </section>
