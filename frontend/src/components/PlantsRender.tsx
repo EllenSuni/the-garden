@@ -5,7 +5,8 @@ import PlantCard from "./PlantCard";
 import { IFullPlant } from "../../../backend/interfaces";
 
 function PlantsRender() {
-  const [plants, setPlants] = useState<IFullPlant[]>([]);
+  const [plants, setPlants] = useState<IFullPlant[]>([]),
+    [status, setStatus] = useState<number>(0);
 
   useEffect(() => {
     fetch("http://localhost:3000/get-plants")
@@ -13,7 +14,7 @@ function PlantsRender() {
       .then((result: IFullPlant[]) => {
         setPlants(result);
       });
-  }, []);
+  }, [status]);
 
   return (
     <>
@@ -22,6 +23,7 @@ function PlantsRender() {
         <PlantCard
           key={plant.id}
           plant={plant}
+          setStatus={setStatus}
         />
       ))}
     </>

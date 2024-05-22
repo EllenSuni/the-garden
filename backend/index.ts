@@ -1,10 +1,9 @@
 import cors from "cors";
 import express from "express";
-import { Request, Response } from "express";
 import dotenv from "dotenv";
 import { Client } from "pg";
 
-import { IPlant, IAddPlant, IFullPlant, IArea, IEvent } from "./interfaces";
+import { IFullPlant, IArea, IEvent } from "./interfaces";
 
 dotenv.config();
 
@@ -21,92 +20,128 @@ app.use(express.json());
 
 //. get all plants
 app.get("/get-plants", async (_request, response) => {
-  const plants: {
-    rows: { id: number; name: string; scientific_name: string; text: string }[];
-  } = await client.query(
-    "SELECT plant.*, note.text FROM plant LEFT JOIN note ON plant.id = note.plant_id"
-  );
+  try {
+    const plants: {
+      rows: {
+        id: number;
+        name: string;
+        scientific_name: string;
+        text: string;
+      }[];
+    } = await client.query(
+      "SELECT plant.*, note.text FROM plant LEFT JOIN note ON plant.id = note.plant_id"
+    );
 
-  Promise.all(
-    plants.rows.map(async (plant) => {
-      const plant_areas: {
-        rows: { plant_id: number; name: string; area: string }[];
-      } = await client.query(
-        "SELECT plant.id AS plant_id, plant.name, area.name AS area FROM plant JOIN plant_area ON plant.id = plant_area.plant_id JOIN area ON area.id = plant_area.area_id WHERE plant.id=$1",
-        [plant.id]
-      );
+    Promise.all(
+      plants.rows.map(async (plant) => {
+        const plant_areas: {
+          rows: { plant_id: number; name: string; area: string }[];
+        } = await client.query(
+          "SELECT plant.id AS plant_id, plant.name, area.name AS area FROM plant JOIN plant_area ON plant.id = plant_area.plant_id JOIN area ON area.id = plant_area.area_id WHERE plant.id=$1",
+          [plant.id]
+        );
 
-      let areas: string[] = [];
+        let areas: string[] = [];
 
-      plant_areas.rows.forEach((area) => {
-        areas.push(area.area);
-      });
+        plant_areas.rows.forEach((area) => {
+          areas.push(area.area);
+        });
 
-      const events: { rows: IEvent[] } = await client.query(
-        "SELECT type, month FROM event WHERE plant_id=$1",
-        [plant.id]
-      );
+        const events: { rows: IEvent[] } = await client.query(
+          "SELECT type, month FROM event WHERE plant_id=$1",
+          [plant.id]
+        );
 
-      let plantItem: IFullPlant = {
-        id: plant.id,
-        name: plant.name,
-        scientific_name: plant.scientific_name,
-        text: plant.text,
-        area: areas,
-        event: events.rows,
-      };
+        let plantItem: IFullPlant = {
+          id: plant.id,
+          name: plant.name,
+          scientific_name: plant.scientific_name,
+          text: plant.text,
+          area: areas,
+          event: events.rows,
+        };
 
-      return plantItem;
-    })
-  ).then((plantItem) => response.send(plantItem));
+        return plantItem;
+      })
+    ).then((plantItem) => response.send(plantItem));
+  } catch (error) {
+    response.status(400).send(error);
+  }
 });
 
 //. add plant
 app.post("/add-plant", async (request, response) => {
-  const addPlant: { rows: { id: number }[] } = await client.query(
-    "INSERT INTO plant (name, scientific_name) VALUES ($1, $2) RETURNING id",
-    [request.body.name, request.body.scientific_name]
-  );
-
-  await client.query("INSERT INTO note (plant_id, text) VALUES ($1, $2)", [
-    addPlant.rows[0].id,
-    request.body.text,
-  ]);
-
-  request.body.event.forEach(async (event: { type: string; month: number }) => {
-    await client.query(
-      "INSERT INTO event (type, month, plant_id) VALUES ($1, $2, $3)",
-      [event.type, event.month, addPlant.rows[0].id]
+  try {
+    const addPlant: { rows: { id: number }[] } = await client.query(
+      "INSERT INTO plant (name, scientific_name) VALUES ($1, $2) RETURNING id",
+      [request.body.name, request.body.scientific_name]
     );
-  });
 
-  request.body.area.forEach(async (area: number) => {
-    await client.query("INSERT INTO plant_area VALUES ($1, $2)", [
-      addPlant.rows[0].id,
-      area,
-    ]);
-  });
+    if (request.body.text) {
+      await client.query("INSERT INTO note (plant_id, text) VALUES ($1, $2)", [
+        addPlant.rows[0].id,
+        request.body.text,
+      ]);
+    }
 
-  response.send(request.body);
+    request.body.event.forEach(
+      async (event: { type: string; month: number }) => {
+        await client.query(
+          "INSERT INTO event (type, month, plant_id) VALUES ($1, $2, $3)",
+          [event.type, event.month, addPlant.rows[0].id]
+        );
+      }
+    );
+
+    request.body.area.forEach(async (area: number) => {
+      await client.query("INSERT INTO plant_area VALUES ($1, $2)", [
+        addPlant.rows[0].id,
+        area,
+      ]);
+    });
+
+    if (addPlant.rows.length === 1) {
+      response.status(201).send(request.body);
+    } else {
+      response.status(400).send();
+    }
+  } catch (error) {
+    response.status(400).send(error);
+  }
 });
 
 //. delete plant
-app.delete("/delete-plant", async (request: Request, response: Response) => {
-  const { name }: { name: string } = request.body;
+app.delete("/delete-plant", async (request, response) => {
+  const { id }: { id: number } = request.body;
 
   try {
-    const { rows }: { rows: IPlant[] } = await client.query(
-      "DELETE FROM plant WHERE name=$1 RETURNING *",
-      [name]
+    await client.query(
+      "DELETE FROM event WHERE plant_id=$1 RETURNING plant_id",
+      [id]
     );
 
-    if (rows.length === 1) {
-      response.status(200).send(`${name} was deleted`);
+    await client.query(
+      "DELETE FROM plant_area WHERE plant_id=$1 RETURNING plant_id",
+      [id]
+    );
+
+    await client.query(
+      "DELETE FROM note WHERE plant_id=$1 RETURNING plant_id",
+      [id]
+    );
+
+    const { rows }: { rows: { plant_id: number }[] } = await client.query(
+      "DELETE FROM plant WHERE id=$1 RETURNING id",
+      [id]
+    );
+
+    if (rows.length > 0) {
+      response.status(201).send();
     } else {
-      response.status(400).send(`Couldn't delete ${name}`);
+      response.status(400).send(`Couldn't delete plant`);
     }
   } catch (error) {
-    response.send(error);
+    response.status(400).send(error);
   }
 });
 
@@ -138,7 +173,7 @@ app.delete("/delete-plant", async (request: Request, response: Response) => {
 //   }
 // });
 
-app.get("/area", async (_request: Request, response: Response) => {
+app.get("/area", async (_request, response) => {
   try {
     const { rows }: { rows: IArea[] } = await client.query(
       "SELECT * FROM area"
@@ -146,11 +181,11 @@ app.get("/area", async (_request: Request, response: Response) => {
 
     response.send(rows);
   } catch (error) {
-    response.send(error);
+    response.status(400).send(error);
   }
 });
 
-app.post("/area", async (request: Request, response: Response) => {
+app.post("/area", async (request, response) => {
   try {
     const { rows }: { rows: IArea[] } = await client.query(
       "INSERT INTO area (name) VALUES ($1) RETURNING *",
@@ -158,7 +193,7 @@ app.post("/area", async (request: Request, response: Response) => {
     );
     response.status(201).send(rows);
   } catch (error) {
-    response.status(400).send();
+    response.status(400).send(error);
   }
 });
 

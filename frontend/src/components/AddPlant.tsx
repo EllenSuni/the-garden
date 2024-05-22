@@ -79,7 +79,15 @@ function AddPlant() {
         method: "POST",
         body: JSON.stringify(newPlant),
         headers: { "Content-type": "application/json" },
-      });
+      })
+        .then((response) => response.status)
+        .then((result) => {
+          if (result === 201) {
+            window.location.reload();
+          } else {
+            console.log("error");
+          }
+        });
     } catch (error) {
       console.log(error);
     }

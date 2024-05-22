@@ -4,12 +4,6 @@ export interface IPlant {
   scientific_name: string;
 }
 
-export interface IAddPlant {
-  name: string;
-  scientific_name: string;
-  planted: string;
-}
-
 export interface IEvent {
   type: string;
   month: number;
