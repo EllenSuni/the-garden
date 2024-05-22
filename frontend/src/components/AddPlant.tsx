@@ -16,11 +16,14 @@ import { INewPlant, IArea } from "../../../backend/interfaces";
 
 function AddPlant() {
   const [newPlant, setNewPlant] = useState<INewPlant>(),
-    [areas, setAreas] = useState<IArea[]>([]);
-
-  function setMonth(month: string, title: string) {
-    setPlant(title, month);
-  }
+    [areas, setAreas] = useState<IArea[]>([]),
+    [plantAreas, setPlantAreas] = useState<number[]>([]),
+    [plantEvents, setPlantEvents] = useState<
+      {
+        month: number;
+        type: string;
+      }[]
+    >([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/area")
@@ -30,41 +33,56 @@ function AddPlant() {
       });
   }, []);
 
-  function setPlant(title: string, value: string | number) {
-    console.log(title, value);
-    setNewPlant({ ...newPlant, [title]: value });
+  function setMonth(month: string, title: string) {
+    if (title === "dressingMonth") {
+      setPlantEvents([...plantEvents, { type: "Torv", month: Number(month) }]);
+    } else if (title === "fertilizerMonth") {
+      setPlantEvents([
+        ...plantEvents,
+        { type: "Gödsla", month: Number(month) },
+      ]);
+    } else if (title === "pruningMonth") {
+      setPlantEvents([
+        ...plantEvents,
+        { type: "Beskär", month: Number(month) },
+      ]);
+    } else if (title === "bloomMonth") {
+      setPlantEvents([
+        ...plantEvents,
+        { type: "Blommar", month: Number(month) },
+      ]);
+    } else if (title === "harvestMonth") {
+      setPlantEvents([
+        ...plantEvents,
+        { type: "Skördas", month: Number(month) },
+      ]);
+    }
   }
 
-  const [newPlantAreas, setNewPlantAreas] = useState([]);
-  // let newPlantAreas: INewPlant["area"];
   function setArea(id: string, isChecked: boolean) {
-    console.log(id, isChecked);
     id = id.replace("areaCheckbox", "");
     if (isChecked) {
-      setNewPlantAreas([...newPlantAreas, Number(id)]);
-      newPlantAreas!.push(Number(id));
+      setPlantAreas([...plantAreas, Number(id)]);
     } else {
-      // console.log();
-      newPlantAreas.splice(newPlantAreas!.indexOf(Number(id)), 1);
+      setPlantAreas(plantAreas.filter((area) => area !== Number(id)));
     }
-
-    console.log(newPlantAreas);
-    setNewPlant({ ...newPlant, area: newPlantAreas });
   }
-  // console.log("51", newPlantAreas);
-  console.log(newPlant);
+
+  useEffect(() => {
+    setNewPlant((n) => ({ ...n, area: plantAreas }));
+    setNewPlant((n) => ({ ...n, event: plantEvents }));
+  }, [plantAreas, plantEvents]);
 
   function handleSubmit() {
-    console.log(newPlant);
-    // try {
-    //   fetch("http://localhost:3000/add-plant", {
-    //     method: "POST",
-    //     body: JSON.stringify(newPlant),
-    //     headers: { "Content-type": "application/json" },
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      fetch("http://localhost:3000/add-plant", {
+        method: "POST",
+        body: JSON.stringify(newPlant),
+        headers: { "Content-type": "application/json" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -163,17 +181,17 @@ function AddPlant() {
         <h4>Kuriosa</h4>
 
         <div className="label-over wrapper">
-          <label htmlFor="bloomTime">Blommar</label>
+          <label htmlFor="bloomMonth">Blommar</label>
           <MonthPicker
             setMonth={setMonth}
-            setTitle="bloomTime"
+            setTitle="bloomMonth"
           />
         </div>
         <div className="label-over wrapper">
-          <label htmlFor="harvestTime">Skördas</label>
+          <label htmlFor="harvestMonth">Skördas</label>
           <MonthPicker
             setMonth={setMonth}
-            setTitle="harvestTime"
+            setTitle="harvestMonth"
           />
         </div>
         <div className="label-over wrapper">

@@ -87,7 +87,6 @@ app.post("/add-plant", async (request, response) => {
     ]);
   });
 
-  // console.log(events);
   response.send(request.body);
 });
 

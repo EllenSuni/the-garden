@@ -38,5 +38,5 @@ export interface INewPlant {
   scientific_name?: string;
   text?: string;
   area?: number[];
-  event?: { type: string; month: number | string }[];
+  event?: { type: string; month: number }[];
 }
