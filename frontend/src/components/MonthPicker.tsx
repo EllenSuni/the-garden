@@ -6,8 +6,7 @@ interface Month {
 function MonthPicker(props: Month) {
   return (
     <select
-      name=""
-      id=""
+      name="monthPicker"
       onChange={(e) => props.setMonth(e.target.value, props.setTitle)}>
       <option value="">Välj en månad</option>
       <option value="1">Januari</option>

@@ -168,7 +168,7 @@ function AddPlant() {
             />
           </div>
           <div className="label-over wrapper">
-            <label htmlFor="gardenArea">Område *</label>
+            <h6 className="label">Område *</h6>
             <p className="disclaimer">Välj ett eller flera områden</p>
 
             {areas!.map((area) => (
@@ -228,14 +228,14 @@ function AddPlant() {
         <h4>Kuriosa</h4>
 
         <div className="label-over wrapper">
-          <label htmlFor="bloomMonth">Blommar</label>
+          <h6 className="label">Blommar</h6>
           <MonthPicker
             setMonth={setMonth}
             setTitle="bloomMonth"
           />
         </div>
         <div className="label-over wrapper">
-          <label htmlFor="harvestMonth">Skördas</label>
+          <h6 className="label">Skördas</h6>
           <MonthPicker
             setMonth={setMonth}
             setTitle="harvestMonth"

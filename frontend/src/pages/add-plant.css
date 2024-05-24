@@ -20,7 +20,8 @@ form section {
   flex-direction: column;
   align-items: center;
 }
-form label {
+form label,
+form .label {
   font-weight: 700;
   font-size: 15px;
 }
