@@ -47,6 +47,24 @@ function PlantCard({ plant, displayModal }: PropsType) {
         event.month = "December";
         break;
     }
+
+    switch (event.type) {
+      case "dressingMonth":
+        event.type = "Torv";
+        break;
+      case "fertilizerMonth":
+        event.type = "Gödsel";
+        break;
+      case "pruningMonth":
+        event.type = "Beskär";
+        break;
+      case "bloomMonth":
+        event.type = "Blommar";
+        break;
+      case "harvestMonth":
+        event.type = "Skördas";
+        break;
+    }
   });
 
   return (

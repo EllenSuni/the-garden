@@ -9,6 +9,8 @@
   padding: 46px 48px;
   max-width: 900px;
   width: 100%;
+
+  margin: 20px auto;
 }
 
 .plant-card__image {
@@ -22,10 +24,9 @@
 .plant-info {
   display: flex;
   flex-direction: column;
-  // justify-content: space-around;
   gap: 20px;
-  max-width: 400px;
-  width: 100%;
+  width: 50vw;
+  max-width: 500px;
 
   &__name {
     font-weight: 800;
@@ -58,9 +59,10 @@
     font-family: "Slackside One", cursive;
     font-size: 18px;
 
-    width: 100%;
+    // width: 100%;
     border: 1px solid $dark-yellow;
     border-radius: 7px;
     padding: 6px 13px 13px;
+    overflow-wrap: break-word;
   }
 }

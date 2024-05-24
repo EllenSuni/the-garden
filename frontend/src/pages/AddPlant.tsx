@@ -33,30 +33,69 @@ function AddPlant() {
       });
   }, []);
 
+  console.log(plantEvents);
+
   function setMonth(month: string, title: string) {
-    if (title === "dressingMonth") {
-      setPlantEvents([...plantEvents, { type: "Torv", month: Number(month) }]);
-    } else if (title === "fertilizerMonth") {
-      setPlantEvents([
-        ...plantEvents,
-        { type: "Gödsla", month: Number(month) },
-      ]);
-    } else if (title === "pruningMonth") {
-      setPlantEvents([
-        ...plantEvents,
-        { type: "Beskär", month: Number(month) },
-      ]);
-    } else if (title === "bloomMonth") {
-      setPlantEvents([
-        ...plantEvents,
-        { type: "Blommar", month: Number(month) },
-      ]);
-    } else if (title === "harvestMonth") {
-      setPlantEvents([
-        ...plantEvents,
-        { type: "Skördas", month: Number(month) },
-      ]);
+    const plantEvent = plantEvents.find((event) => event.type === title);
+    if (plantEvent) {
+      const updatedEvents = plantEvents.map((event) => {
+        return event.type === plantEvent.type
+          ? { type: event.type, month: Number(month) }
+          : event;
+      });
+      setPlantEvents(updatedEvents);
+    } else {
+      setPlantEvents([...plantEvents, { type: title, month: Number(month) }]);
     }
+    // if (title === "dressingMonth") {
+    //   const plantEvent = plantEvents.find((event) => event.type === "Torv");
+    //   if (plantEvent) {
+    //     const updatedEvents = plantEvents.map((event) => {
+    //       return event.type === plantEvent.type
+    //         ? { type: event.type, month: Number(month) }
+    //         : event;
+    //     });
+    //     setPlantEvents(updatedEvents);
+    //   } else {
+    //     setPlantEvents([
+    //       ...plantEvents,
+    //       { type: "Torv", month: Number(month) },
+    //     ]);
+    //   }
+    // } else if (title === "fertilizerMonth") {
+    //   const plantEvent = plantEvents.find((event) => event.type === "Gödsla");
+    //   if (plantEvent) {
+    //     setPlantEvents(
+    //       plantEvents.map((event, index) => {
+    //         console.log(event);
+    //         return index === plantEvents.indexOf(event!)
+    //           ? { ...plantEvent, month: Number(month) }
+    //           : event;
+    //       })
+    //     );
+    //     console.log(plantEvent);
+    //   } else {
+    //     setPlantEvents([
+    //       ...plantEvents,
+    //       { type: "Gödsla", month: Number(month) },
+    //     ]);
+    //   }
+    // } else if (title === "pruningMonth") {
+    //   setPlantEvents([
+    //     ...plantEvents,
+    //     { type: "Beskär", month: Number(month) },
+    //   ]);
+    // } else if (title === "bloomMonth") {
+    //   setPlantEvents([
+    //     ...plantEvents,
+    //     { type: "Blommar", month: Number(month) },
+    //   ]);
+    // } else if (title === "harvestMonth") {
+    //   setPlantEvents([
+    //     ...plantEvents,
+    //     { type: "Skördas", month: Number(month) },
+    //   ]);
+    // }
   }
 
   function setArea(id: string, isChecked: boolean) {

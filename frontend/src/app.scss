@@ -13,6 +13,10 @@
   min-height: 100vh;
 }
 
+main {
+  padding: 30px;
+}
+
 @font-face {
   font-family: Spectral;
   src: url(./assets/Spectral/Spectral-Regular.ttf) format("truetype");
