@@ -4,7 +4,11 @@ import PlantCard from "./PlantCard";
 
 import { IFullPlant } from "../../../backend/interfaces";
 
-function PlantsRender() {
+interface PropsType {
+  displayModal: (id: number) => void;
+}
+
+function PlantsRender({ displayModal }: PropsType) {
   const [plants, setPlants] = useState<IFullPlant[]>([]),
     [status, setStatus] = useState<number>(0);
 
@@ -24,6 +28,7 @@ function PlantsRender() {
           key={plant.id}
           plant={plant}
           setStatus={setStatus}
+          displayModal={displayModal}
         />
       ))}
     </>

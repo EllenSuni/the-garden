@@ -5,24 +5,26 @@ import { IFullPlant } from "../../../backend/interfaces";
 interface PropsType {
   plant: IFullPlant;
   setStatus: (status: number) => void;
+  displayModal: (id: number) => void;
 }
 
-function PlantCard({ plant, setStatus }: PropsType) {
+function PlantCard({ plant, setStatus, displayModal }: PropsType) {
   function deletePlant() {
     setStatus(0);
-    try {
-      fetch("http://localhost:3000/delete-plant", {
-        method: "DELETE",
-        body: JSON.stringify({ id: plant.id }),
-        headers: { "Content-type": "application/json" },
-      })
-        .then((response) => response.status)
-        .then((result) => {
-          setStatus(result);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    displayModal(plant.id);
+    // try {
+    //   fetch("http://localhost:3000/delete-plant", {
+    //     method: "DELETE",
+    //     body: JSON.stringify({ id: plant.id }),
+    //     headers: { "Content-type": "application/json" },
+    //   })
+    //     .then((response) => response.status)
+    //     .then((result) => {
+    //       setStatus(result);
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   plant.event.forEach((event) => {
@@ -49,7 +51,7 @@ function PlantCard({ plant, setStatus }: PropsType) {
         event.month = "Juli";
         break;
       case 8:
-        event.month = "Augisti";
+        event.month = "Augusti";
         break;
       case 9:
         event.month = "September";

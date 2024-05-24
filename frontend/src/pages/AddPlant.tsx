@@ -10,7 +10,7 @@
 //* lägg till skötselråd eller visa alla?
 
 import { useEffect, useState } from "react";
-import MonthPicker from "./MonthPicker";
+import MonthPicker from "../components/MonthPicker";
 import "./add-plant.css";
 import { INewPlant, IArea } from "../../../backend/interfaces";
 

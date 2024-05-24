@@ -9,13 +9,7 @@ function MonthPicker(props: Month) {
       name=""
       id=""
       onChange={(e) => props.setMonth(e.target.value, props.setTitle)}>
-      <option
-        value=""
-        disabled
-        selected
-        hidden>
-        Välj en månad
-      </option>
+      <option value="">Välj en månad</option>
       <option value="1">Januari</option>
       <option value="2">Februari</option>
       <option value="3">Mars</option>

@@ -113,8 +113,11 @@ app.post("/add-plant", async (request, response) => {
 //. delete plant
 app.delete("/delete-plant", async (request, response) => {
   const { id }: { id: number } = request.body;
+  console.log(id);
 
   try {
+    await client.query("SELECT * FROM plant WHERE id=$1", [id]);
+
     await client.query(
       "DELETE FROM event WHERE plant_id=$1 RETURNING plant_id",
       [id]
@@ -124,6 +127,8 @@ app.delete("/delete-plant", async (request, response) => {
       "DELETE FROM plant_area WHERE plant_id=$1 RETURNING plant_id",
       [id]
     );
+
+    //   console.log(plantArea.rows);
 
     await client.query(
       "DELETE FROM note WHERE plant_id=$1 RETURNING plant_id",
@@ -135,11 +140,13 @@ app.delete("/delete-plant", async (request, response) => {
       [id]
     );
 
-    if (rows.length > 0) {
+    if (rows.length === 1) {
       response.status(201).send();
     } else {
       response.status(400).send(`Couldn't delete plant`);
     }
+    // console.log(rows.length);
+    // response.send(rows);
   } catch (error) {
     response.status(400).send(error);
   }

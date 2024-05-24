@@ -1,0 +1,25 @@
+@import "../assets/variables";
+
+header {
+  background: $medium-yellow;
+  padding: 50px;
+  box-shadow: 3px 1px 10px $medium-yellow;
+
+  & ul {
+    display: flex;
+    gap: 10px;
+
+    & li {
+      list-style: none;
+      font-weight: 700;
+    }
+  }
+
+  & a {
+    color: $dark-color;
+
+    &:hover {
+      text-shadow: 4px 4px 5px $dark-yellow;
+    }
+  }
+}

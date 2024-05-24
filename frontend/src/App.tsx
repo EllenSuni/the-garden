@@ -5,6 +5,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import MyPlants from "./pages/MyPlants";
+import AddPlant from "./pages/AddPlant";
 
 function App() {
   const router = createHashRouter([
@@ -12,6 +13,7 @@ function App() {
       children: [
         { element: <Home />, path: "/" },
         { element: <MyPlants />, path: "/my-plants" },
+        { element: <AddPlant />, path: "/add-plant" },
       ],
       element: (
         <div id="body">
