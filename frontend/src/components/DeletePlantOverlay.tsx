@@ -2,13 +2,14 @@ import "./delete-plant-overlay.css";
 
 interface PropsType {
   displayModal: () => void;
-  deletePlant: () => void;
   id: number;
+  setStatus: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function DeletePlantOverlay({ displayModal, id }: PropsType) {
-  function deletePlant() {
-    console.log(id);
+function DeletePlantOverlay({ displayModal, id, setStatus }: PropsType) {
+  function handleDelete() {
+    displayModal();
+    setStatus(0);
     try {
       fetch("http://localhost:3000/delete-plant", {
         method: "DELETE",
@@ -17,8 +18,7 @@ function DeletePlantOverlay({ displayModal, id }: PropsType) {
       })
         .then((response) => response.status)
         .then((result) => {
-          // setStatus(result);
-          console.log(result);
+          setStatus(result);
         });
     } catch (error) {
       console.log(error);
@@ -34,7 +34,7 @@ function DeletePlantOverlay({ displayModal, id }: PropsType) {
         </div>
         <button
           className="delete-plant-btn"
-          onClick={deletePlant}>
+          onClick={() => handleDelete()}>
           Radera
         </button>
         <button

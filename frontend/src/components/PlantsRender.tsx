@@ -6,11 +6,11 @@ import { IFullPlant } from "../../../backend/interfaces";
 
 interface PropsType {
   displayModal: (id: number) => void;
+  status: number;
 }
 
-function PlantsRender({ displayModal }: PropsType) {
-  const [plants, setPlants] = useState<IFullPlant[]>([]),
-    [status, setStatus] = useState<number>(0);
+function PlantsRender({ displayModal, status }: PropsType) {
+  const [plants, setPlants] = useState<IFullPlant[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/get-plants")
@@ -27,7 +27,6 @@ function PlantsRender({ displayModal }: PropsType) {
         <PlantCard
           key={plant.id}
           plant={plant}
-          setStatus={setStatus}
           displayModal={displayModal}
         />
       ))}
