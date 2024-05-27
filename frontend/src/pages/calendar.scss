@@ -17,6 +17,11 @@
     color: $medium-green;
     margin-block: 27px;
     font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

@@ -152,34 +152,6 @@ app.delete("/delete-plant", async (request, response) => {
   }
 });
 
-//. edit plant
-// app.put("/edit-plant", async (request: Request, response: Response) => {
-//   try {
-//     const { id, name, scientific_name }: IPlant = request.body;
-
-//     const getPlant: { rows: IPlant[] } = await client.query(
-//       "SELECT * FROM plant WHERE id=$1",
-//       [id]
-//     );
-
-//     const plant = getPlant.rows[0];
-
-//     const nameUpdate = name ? name : plant.name,
-//       scientific_nameUpdate = scientific_name
-//         ? scientific_name
-//         : plant.scientific_name,
-//       plantedUpdate = planted ? planted : plant.planted;
-
-//     const { rows } = await client.query(
-//       "UPDATE plant SET name=$1, scientific_name=$2, planted=$3 WHERE id=$4 RETURNING *",
-//       [nameUpdate, scientific_nameUpdate, plantedUpdate, id]
-//     );
-//     response.send(rows);
-//   } catch (error) {
-//     response.send(error);
-//   }
-// });
-
 app.get("/area", async (_request, response) => {
   try {
     const { rows }: { rows: IArea[] } = await client.query(
@@ -202,6 +174,17 @@ app.post("/area", async (request, response) => {
   } catch (error) {
     response.status(400).send(error);
   }
+});
+
+app.get("/event", async (request, response) => {
+  const month = request.query.month;
+
+  const { rows }: { rows: IEvent[] } = await client.query(
+    "SELECT event.*, plant.name FROM event LEFT JOIN plant ON event.plant_id = plant.id WHERE month=$1",
+    [month]
+  );
+
+  response.send(rows);
 });
 
 app.listen(3000);

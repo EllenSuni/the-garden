@@ -14,6 +14,10 @@
   color: #555c4c;
   margin-block: 27px;
   font-weight: 600;
+  cursor: pointer;
+}
+.months-list-item:hover {
+  text-decoration: underline;
 }
 
 .container {
