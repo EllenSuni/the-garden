@@ -1,5 +1,9 @@
 @import "../assets/variables";
 
+.my-plants-heading {
+  text-align: center;
+}
+
 .plant-card {
   display: flex;
   gap: 40px;
@@ -65,4 +69,8 @@
     padding: 6px 13px 13px;
     overflow-wrap: break-word;
   }
+}
+
+.delete:hover {
+  cursor: pointer;
 }

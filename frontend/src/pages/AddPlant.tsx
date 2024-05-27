@@ -190,10 +190,10 @@ function AddPlant() {
         <h4>Skötsel</h4>
         <div className="label-left wrapper">
           <label htmlFor="dressingCheckbox">Torv</label>
-          <input
+          {/* <input
             type="checkbox"
             id="dressingCheckbox"
-          />
+          /> */}
           <MonthPicker
             setMonth={setMonth}
             setTitle="dressingMonth"
@@ -201,10 +201,10 @@ function AddPlant() {
         </div>
         <div className="label-left wrapper">
           <label htmlFor="fertilizerCheckbox">Gödsel</label>
-          <input
+          {/* <input
             type="checkbox"
             id="fertilizerCheckbox"
-          />
+          /> */}
 
           <MonthPicker
             setMonth={setMonth}
@@ -213,10 +213,10 @@ function AddPlant() {
         </div>
         <div className="label-left wrapper">
           <label htmlFor="pruningCheckbox">Beskärning</label>
-          <input
+          {/* <input
             type="checkbox"
             id="pruningCheckbox"
-          />
+          /> */}
 
           <MonthPicker
             setMonth={setMonth}

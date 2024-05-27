@@ -27,6 +27,18 @@ function Navigation() {
           <ul className="navigation-list">
             <li className="navigation-list-item">
               <Link
+                to="/"
+                onClick={() => setOpenNavigation(!openNavigation)}>
+                <img
+                  className="icon"
+                  src={House}
+                  alt="Hem "
+                />
+                Hem
+              </Link>
+            </li>
+            <li className="navigation-list-item">
+              <Link
                 to="/calendar"
                 onClick={() => setOpenNavigation(!openNavigation)}>
                 <img
@@ -35,18 +47,6 @@ function Navigation() {
                   alt="Kalender"
                 />
                 Min kalender
-              </Link>
-            </li>
-            <li className="navigation-list-item">
-              <Link
-                to="/add-plant"
-                onClick={() => setOpenNavigation(!openNavigation)}>
-                <img
-                  className="icon"
-                  src={Plus}
-                  alt="Lägg till växt"
-                />
-                Lägg till växt
               </Link>
             </li>
             <li className="navigation-list-item">
@@ -63,14 +63,14 @@ function Navigation() {
             </li>
             <li className="navigation-list-item">
               <Link
-                to="/"
+                to="/add-plant"
                 onClick={() => setOpenNavigation(!openNavigation)}>
                 <img
                   className="icon"
-                  src={House}
-                  alt="Hem "
+                  src={Plus}
+                  alt="Lägg till växt"
                 />
-                Hem
+                Lägg till växt
               </Link>
             </li>
           </ul>

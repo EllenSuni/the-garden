@@ -22,7 +22,7 @@ function PlantsRender({ displayModal, status }: PropsType) {
 
   return (
     <>
-      <h2>Växter</h2>
+      <h1 className="my-plants-heading">Växter</h1>
       {plants.map((plant) => (
         <PlantCard
           key={plant.id}

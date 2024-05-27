@@ -1,3 +1,7 @@
+.my-plants-heading {
+  text-align: center;
+}
+
 .plant-card {
   display: flex;
   gap: 40px;
@@ -58,4 +62,8 @@
   border-radius: 7px;
   padding: 6px 13px 13px;
   overflow-wrap: break-word;
+}
+
+.delete:hover {
+  cursor: pointer;
 }/*# sourceMappingURL=plant-card.css.map */
