@@ -35,10 +35,10 @@
   }
 }
 
-ul {
+.navigation-list {
   list-style: none;
 
-  li {
+  &-item {
     margin-block: 50px;
   }
 

@@ -24,10 +24,10 @@ function Navigation() {
           openNavigation ? "navigation-open" : "navigation-closed"
         }`}>
         {openNavigation && (
-          <ul>
-            <li>
+          <ul className="navigation-list">
+            <li className="navigation-list-item">
               <Link
-                to="/"
+                to="/calendar"
                 onClick={() => setOpenNavigation(!openNavigation)}>
                 <img
                   className="icon"
@@ -37,7 +37,7 @@ function Navigation() {
                 Min kalender
               </Link>
             </li>
-            <li>
+            <li className="navigation-list-item">
               <Link
                 to="/add-plant"
                 onClick={() => setOpenNavigation(!openNavigation)}>
@@ -49,7 +49,7 @@ function Navigation() {
                 Lägg till växt
               </Link>
             </li>
-            <li>
+            <li className="navigation-list-item">
               <Link
                 to="/my-plants"
                 onClick={() => setOpenNavigation(!openNavigation)}>
@@ -61,7 +61,7 @@ function Navigation() {
                 Mina växter
               </Link>
             </li>
-            <li>
+            <li className="navigation-list-item">
               <Link
                 to="/"
                 onClick={() => setOpenNavigation(!openNavigation)}>

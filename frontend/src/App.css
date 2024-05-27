@@ -6,13 +6,13 @@
   accent-color: #555c4c;
 }
 
-#body {
-  background-color: #f2f1ef;
-  min-height: 100vh;
-}
-
 main {
+  background-color: #f2f1ef;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 @font-face {

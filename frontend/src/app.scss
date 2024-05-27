@@ -8,13 +8,13 @@
   accent-color: $medium-green;
 }
 
-#body {
-  background-color: $light-color;
-  min-height: 100vh;
-}
-
 main {
+  background-color: $light-color;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 @font-face {

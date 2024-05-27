@@ -1,0 +1,59 @@
+@import "../assets/variables";
+
+.calendar-page {
+  // border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.months-list {
+  list-style: none;
+  width: 10vw;
+  margin-left: 40px;
+  border-right: 2px solid $medium-yellow;
+
+  &-item {
+    color: $medium-green;
+    margin-block: 27px;
+    font-weight: 600;
+  }
+}
+
+.container {
+  margin-left: 7vw;
+  display: flex;
+  flex-direction: column;
+  gap: 62px;
+}
+
+.current-month {
+  color: $medium-green;
+  font-size: 30px;
+}
+
+.events-container {
+  display: flex;
+  justify-content: space-between;
+  width: 40vw;
+}
+
+.event {
+  color: $medium-green;
+
+  &-heading {
+    color: $light-green;
+  }
+
+  &-type {
+    padding: 16px;
+    display: flex;
+    border-top: 2px solid $medium-yellow;
+
+    &-heading {
+      font-size: 17px;
+      font-weight: 200;
+      margin-right: 60px;
+    }
+  }
+}
