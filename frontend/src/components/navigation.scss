@@ -1,0 +1,66 @@
+@import "../assets/variables";
+
+.navigation {
+  position: fixed;
+  background-color: $light-yellow;
+  border-radius: 52px;
+  z-index: 999;
+
+  &-closed {
+    right: 2vw;
+    bottom: 2vw;
+    border-radius: 50%;
+
+    width: 100px;
+    height: 100px;
+  }
+  &-open {
+    right: 0;
+    bottom: 0;
+    padding: 36px;
+  }
+
+  &-overlay {
+    position: fixed;
+    display: block;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+  }
+}
+
+ul {
+  list-style: none;
+
+  li {
+    margin-block: 50px;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $medium-green;
+    text-decoration: none;
+  }
+}
+
+.icon {
+  width: 50px;
+}
+
+.bottom-icon-wrapper {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 4px 13px #00000025;
+  border-radius: 50%;
+}

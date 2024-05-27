@@ -2,7 +2,7 @@ import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import "./App.css";
 
-import Header from "./components/Header";
+import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import MyPlants from "./pages/MyPlants";
 import AddPlant from "./pages/AddPlant";
@@ -17,7 +17,7 @@ function App() {
       ],
       element: (
         <div id="body">
-          <Header />
+          <Navigation />
           <main>
             <Outlet />
           </main>
