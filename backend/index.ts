@@ -15,6 +15,7 @@ const client = new Client({
 client.connect();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -192,4 +193,4 @@ app.get("/event", async (request, response) => {
 
 app.use(express.static(path.join(path.resolve(), "dist")));
 
-app.listen(3000);
+app.listen(port);
