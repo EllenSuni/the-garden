@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import { Client } from "pg";
+import path from "path";
 
 import { IFullPlant, IArea, IEvent } from "./interfaces";
 
@@ -17,6 +18,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// const stuff: string[] = (await..query..).rows
 
 //. get all plants
 app.get("/get-plants", async (_request, response) => {
@@ -186,5 +189,7 @@ app.get("/event", async (request, response) => {
 
   response.send(rows);
 });
+
+app.use(express.static(path.join(path.resolve(), "dist")));
 
 app.listen(3000);
