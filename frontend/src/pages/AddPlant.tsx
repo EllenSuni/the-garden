@@ -26,7 +26,7 @@ function AddPlant() {
     >([]);
 
   useEffect(() => {
-    fetch("/api/area")
+    fetch("/area")
       .then((response) => response.json())
       .then((result) => {
         setAreas(result);
@@ -114,7 +114,7 @@ function AddPlant() {
 
   function handleSubmit() {
     try {
-      fetch("/api/add-plant", {
+      fetch("/add-plant", {
         method: "POST",
         body: JSON.stringify(newPlant),
         headers: { "Content-type": "application/json" },
