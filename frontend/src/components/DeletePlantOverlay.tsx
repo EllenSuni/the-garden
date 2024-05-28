@@ -11,7 +11,7 @@ function DeletePlantOverlay({ displayModal, id, setStatus }: PropsType) {
     displayModal();
     setStatus(0);
     try {
-      fetch("http://localhost:3000/delete-plant", {
+      fetch("/api/delete-plant", {
         method: "DELETE",
         body: JSON.stringify({ id: id }),
         headers: { "Content-type": "application/json" },
