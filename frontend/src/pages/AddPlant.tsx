@@ -115,7 +115,7 @@ function AddPlant() {
 
   function handleSubmit() {
     try {
-      fetch("/add-plant", {
+      fetch("/api/add-plant", {
         method: "POST",
         body: JSON.stringify(newPlant),
         headers: { "Content-type": "application/json" },
