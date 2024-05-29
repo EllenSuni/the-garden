@@ -23,7 +23,7 @@ app.use(express.json());
 // const stuff: string[] = (await..query..).rows
 
 //. get all plants
-app.get("/get-plants", async (_request, response) => {
+app.get("/api/get-plants", async (_request, response) => {
   try {
     const plants: {
       rows: {
@@ -74,7 +74,7 @@ app.get("/get-plants", async (_request, response) => {
 });
 
 //. add plant
-app.post("/add-plant", async (request, response) => {
+app.post("/api/add-plant", async (request, response) => {
   try {
     const addPlant: { rows: { id: number }[] } = await client.query(
       "INSERT INTO plant (name, scientific_name) VALUES ($1, $2) RETURNING id",
@@ -115,7 +115,7 @@ app.post("/add-plant", async (request, response) => {
 });
 
 //. delete plant
-app.delete("/delete-plant", async (request, response) => {
+app.delete("/api/delete-plant", async (request, response) => {
   const { id }: { id: number } = request.body;
   console.log(id);
 
@@ -156,7 +156,7 @@ app.delete("/delete-plant", async (request, response) => {
   }
 });
 
-app.get("/area", async (_request, response) => {
+app.get("/api/area", async (_request, response) => {
   try {
     const { rows }: { rows: IArea[] } = await client.query(
       "SELECT * FROM area"
@@ -168,7 +168,7 @@ app.get("/area", async (_request, response) => {
   }
 });
 
-app.post("/area", async (request, response) => {
+app.post("/api/area", async (request, response) => {
   try {
     const { rows }: { rows: IArea[] } = await client.query(
       "INSERT INTO area (name) VALUES ($1) RETURNING *",
@@ -180,7 +180,7 @@ app.post("/area", async (request, response) => {
   }
 });
 
-app.get("/event", async (request, response) => {
+app.get("/api/event", async (request, response) => {
   const month = request.query.month;
 
   const { rows }: { rows: IEvent[] } = await client.query(
@@ -193,6 +193,4 @@ app.get("/event", async (request, response) => {
 
 app.use(express.static(path.join(path.resolve(), "dist")));
 
-app.listen(port, () => {
-  console.log(port);
-});
+app.listen(port);
