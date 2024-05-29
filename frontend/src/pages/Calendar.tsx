@@ -26,7 +26,7 @@ function Calendar() {
     [events, setEvents] = useState<IEventPlantName[]>([]);
 
   useEffect(() => {
-    fetch(`/event/?month=${currentMonth}`)
+    fetch(`/api/event/?month=${currentMonth}`)
       .then((response) => response.json())
       .then((result: IEventPlantName[]) => {
         setEvents(result);

@@ -13,7 +13,7 @@ function PlantsRender({ displayModal, status }: PropsType) {
   const [plants, setPlants] = useState<IFullPlant[]>([]);
 
   useEffect(() => {
-    fetch("/get-plants")
+    fetch("/api/get-plants")
       .then((response) => response.json())
       .then((result: IFullPlant[]) => {
         setPlants(result);
