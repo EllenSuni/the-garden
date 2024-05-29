@@ -26,10 +26,11 @@ function AddPlant() {
     >([]);
 
   useEffect(() => {
-    fetch("/area")
+    fetch("/api/area")
       .then((response) => response.json())
       .then((result) => {
         setAreas(result);
+        console.log(result);
       });
   }, []);
 

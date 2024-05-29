@@ -193,4 +193,6 @@ app.get("/event", async (request, response) => {
 
 app.use(express.static(path.join(path.resolve(), "dist")));
 
-app.listen(port);
+app.listen(port, () => {
+  console.log(port);
+});
