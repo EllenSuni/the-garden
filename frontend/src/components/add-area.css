@@ -1,0 +1,9 @@
+.area-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.close-area {
+  width: 20px;
+  cursor: pointer;
+}/*# sourceMappingURL=add-area.css.map */

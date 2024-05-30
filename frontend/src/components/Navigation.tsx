@@ -8,6 +8,7 @@ import Calendar from "../assets/icons/calendar.svg";
 import House from "../assets/icons/house.svg";
 import Plant from "../assets/icons/plant.svg";
 import Plus from "../assets/icons/plus.svg";
+import User from "../assets/icons/user.svg";
 
 function Navigation() {
   const [openNavigation, setOpenNavigation] = useState(false);
@@ -71,6 +72,18 @@ function Navigation() {
                   alt="Lägg till växt"
                 />
                 Lägg till växt
+              </Link>
+            </li>
+            <li className="navigation-list-item">
+              <Link
+                to="/profile"
+                onClick={() => setOpenNavigation(!openNavigation)}>
+                <img
+                  className="icon"
+                  src={User}
+                  alt="Profilikon"
+                />
+                Profil
               </Link>
             </li>
           </ul>

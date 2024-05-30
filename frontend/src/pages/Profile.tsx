@@ -3,11 +3,12 @@ import AddArea from "../components/AddArea";
 
 function Profile() {
   const [showAreaModal, setShowAreaModal] = useState(false);
+
   return (
     <>
-      <h1>profile</h1>
+      <h1>Profil</h1>
       <button onClick={() => setShowAreaModal(true)}>Lägg till område</button>
-      {showAreaModal && <AddArea />}
+      {showAreaModal && <AddArea modal={setShowAreaModal} />}
     </>
   );
 }
