@@ -1,0 +1,24 @@
+.profile-page {
+  margin: auto;
+}
+
+.my-areas {
+  border: 2px solid #d5cfbe;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.my-areas-list-row {
+  display: flex;
+  justify-content: space-between;
+}
+.my-areas-list-row-item {
+  color: #555c4c;
+  margin-left: 12px;
+}
+.my-areas-trash-can {
+  width: 16px;
+  margin-left: 7px;
+}/*# sourceMappingURL=profile.css.map */
