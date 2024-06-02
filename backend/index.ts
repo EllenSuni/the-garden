@@ -20,9 +20,6 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// const stuff: string[] = (await..query..).rows
-
-//. get all plants
 app.get("/api/get-plants", async (_request, response) => {
   try {
     const plants: {
@@ -73,7 +70,6 @@ app.get("/api/get-plants", async (_request, response) => {
   }
 });
 
-//. add plant
 app.post("/api/add-plant", async (request, response) => {
   try {
     const addPlant: { rows: { id: number }[] } = await client.query(
@@ -114,7 +110,6 @@ app.post("/api/add-plant", async (request, response) => {
   }
 });
 
-//. delete plant
 app.delete("/api/delete-plant", async (request, response) => {
   const { id }: { id: number } = request.body;
   console.log(id);
@@ -131,8 +126,6 @@ app.delete("/api/delete-plant", async (request, response) => {
       "DELETE FROM plant_area WHERE plant_id=$1 RETURNING plant_id",
       [id]
     );
-
-    //   console.log(plantArea.rows);
 
     await client.query(
       "DELETE FROM note WHERE plant_id=$1 RETURNING plant_id",

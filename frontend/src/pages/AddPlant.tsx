@@ -1,18 +1,8 @@
-//. lägg ihop saker och loopa (dry)
-//. defaultValue on select - error
-//. setNewPlant i en egen funktion (nope)
-//. felmeddelanden
-//. töm form vid submit
-//. dela upp i tre "sidor"
-//. månad till månad
-
-//* kalender eller fritext?? går inte med båda
-//* lägg till skötselråd eller visa alla?
-
 import { useEffect, useState } from "react";
 import MonthPicker from "../components/MonthPicker";
 import "./add-plant.css";
 import { INewPlant, IArea } from "../../../backend/interfaces";
+import { useNavigate } from "react-router-dom";
 
 function AddPlant() {
   const [newPlant, setNewPlant] = useState<INewPlant>(),
@@ -34,8 +24,6 @@ function AddPlant() {
       });
   }, []);
 
-  console.log(plantEvents);
-
   function setMonth(month: string, title: string) {
     const plantEvent = plantEvents.find((event) => event.type === title);
     if (plantEvent) {
@@ -48,55 +36,6 @@ function AddPlant() {
     } else {
       setPlantEvents([...plantEvents, { type: title, month: Number(month) }]);
     }
-    // if (title === "dressingMonth") {
-    //   const plantEvent = plantEvents.find((event) => event.type === "Torv");
-    //   if (plantEvent) {
-    //     const updatedEvents = plantEvents.map((event) => {
-    //       return event.type === plantEvent.type
-    //         ? { type: event.type, month: Number(month) }
-    //         : event;
-    //     });
-    //     setPlantEvents(updatedEvents);
-    //   } else {
-    //     setPlantEvents([
-    //       ...plantEvents,
-    //       { type: "Torv", month: Number(month) },
-    //     ]);
-    //   }
-    // } else if (title === "fertilizerMonth") {
-    //   const plantEvent = plantEvents.find((event) => event.type === "Gödsla");
-    //   if (plantEvent) {
-    //     setPlantEvents(
-    //       plantEvents.map((event, index) => {
-    //         console.log(event);
-    //         return index === plantEvents.indexOf(event!)
-    //           ? { ...plantEvent, month: Number(month) }
-    //           : event;
-    //       })
-    //     );
-    //     console.log(plantEvent);
-    //   } else {
-    //     setPlantEvents([
-    //       ...plantEvents,
-    //       { type: "Gödsla", month: Number(month) },
-    //     ]);
-    //   }
-    // } else if (title === "pruningMonth") {
-    //   setPlantEvents([
-    //     ...plantEvents,
-    //     { type: "Beskär", month: Number(month) },
-    //   ]);
-    // } else if (title === "bloomMonth") {
-    //   setPlantEvents([
-    //     ...plantEvents,
-    //     { type: "Blommar", month: Number(month) },
-    //   ]);
-    // } else if (title === "harvestMonth") {
-    //   setPlantEvents([
-    //     ...plantEvents,
-    //     { type: "Skördas", month: Number(month) },
-    //   ]);
-    // }
   }
 
   function setArea(id: string, isChecked: boolean) {
@@ -113,6 +52,7 @@ function AddPlant() {
     setNewPlant((n) => ({ ...n, event: plantEvents }));
   }, [plantAreas, plantEvents]);
 
+  const navigate = useNavigate();
   function handleSubmit() {
     try {
       fetch("/api/add-plant", {
@@ -123,7 +63,8 @@ function AddPlant() {
         .then((response) => response.status)
         .then((result) => {
           if (result === 201) {
-            window.location.reload();
+            alert("Växt tillagd");
+            navigate("/my-plants");
           } else {
             console.log("error");
           }

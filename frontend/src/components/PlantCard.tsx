@@ -76,7 +76,6 @@ function PlantCard({ plant, displayModal }: PropsType) {
       />
       <div className="plant-info">
         <div>
-          {/* Färger!!! */}
           {plant.area.map((value) => (
             <h4 key={value}>{value}</h4>
           ))}
