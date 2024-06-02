@@ -180,6 +180,21 @@ app.post("/api/area", async (request, response) => {
   }
 });
 
+app.delete("/api/area", async (request, response) => {
+  try {
+    const { rows }: { rows: IArea[] } = await client.query(
+      "DELETE FROM area WHERE id=$1 RETURNING *",
+      [request.body.id]
+    );
+    if (rows.length === 1) {
+      response.status(201).send();
+    }
+    // response.status(201).send(rows);
+  } catch (error) {
+    response.status(400).send(error);
+  }
+});
+
 app.get("/api/event", async (request, response) => {
   const month = request.query.month;
 

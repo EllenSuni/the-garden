@@ -1,5 +1,5 @@
 import Navigation from "../components/Navigation";
-import House from "../assets/images/huset1.png";
+import House from "../assets/images/huset-mammas.jpg";
 
 import "./home.css";
 
