@@ -1,7 +1,16 @@
 import { useState } from "react";
 
-function AddArea() {
-  const [newArea, setNewArea] = useState<string>();
+import "./add-area.css";
+
+import XIcon from "../assets/icons/x.svg";
+
+interface PropsType {
+  modal: (state: boolean) => void;
+}
+
+function AddArea({ modal }: PropsType) {
+  const [newArea, setNewArea] = useState<string>(),
+    [error, setError] = useState<string>();
 
   function addNewArea() {
     try {
@@ -14,33 +23,48 @@ function AddArea() {
         .then((result) => {
           if (result === 201) {
             window.location.reload();
+            modal(false);
           } else {
+            setError("Fyll i ett namn på området");
             console.log("error");
           }
         });
     } catch (error) {
+      setError("Fyll i ett namn på området");
       console.log(error);
     }
   }
 
   return (
-    <>
-      <h3>Lägg till område</h3>
-      <form onSubmit={addNewArea}>
-        <div className="label-left wrapper">
-          <label htmlFor="areaName">Namn</label>
-          <input
-            type="text"
-            id="areaName"
-            onChange={(e) => setNewArea(e.target.value)}
+    <div className="overlay">
+      <div className="content">
+        <div className="area-flex">
+          <h3>Lägg till område</h3>
+          <img
+            className="close-area"
+            src={XIcon}
+            alt="Stäng"
+            onClick={() => modal(false)}
           />
         </div>
-        <input
-          type="submit"
-          value="Lägg till"
-        />
-      </form>
-    </>
+        <form onSubmit={addNewArea}>
+          <div className="label-left wrapper">
+            <label htmlFor="areaName">Namn</label>
+            <input
+              type="text"
+              id="areaName"
+              onChange={(e) => setNewArea(e.target.value)}
+              autoFocus
+            />
+          </div>
+          {error && <p className="disclaimer">*{error}</p>}
+          <input
+            type="submit"
+            value="Lägg till"
+          />
+        </form>
+      </div>
+    </div>
   );
 }
 

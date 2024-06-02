@@ -35,7 +35,7 @@
   list-style: none;
 }
 .navigation-list-item {
-  margin-block: 50px;
+  margin-block: 30px;
 }
 .navigation-list a {
   display: flex;

@@ -1,0 +1,29 @@
+@import "../assets/variables";
+
+.profile-page {
+  margin: auto;
+}
+
+.my-areas {
+  border: 2px solid $light-yellow;
+  border-radius: 10px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &-list-row {
+    display: flex;
+    justify-content: space-between;
+
+    &-item {
+      color: $medium-green;
+      margin-left: 12px;
+    }
+  }
+  &-trash-can {
+    width: 16px;
+    margin-left: 7px;
+  }
+}
