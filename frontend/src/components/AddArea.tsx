@@ -54,6 +54,7 @@ function AddArea({ modal }: PropsType) {
               type="text"
               id="areaName"
               onChange={(e) => setNewArea(e.target.value)}
+              autoFocus
             />
           </div>
           {error && <p className="disclaimer">*{error}</p>}

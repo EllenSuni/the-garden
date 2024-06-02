@@ -8,10 +8,27 @@ import TrashCan from "../assets/icons/trash-can.svg";
 
 function Profile() {
   const [showAreaModal, setShowAreaModal] = useState(false),
-    [areas, setAreas] = useState<IArea[]>([]);
+    [areas, setAreas] = useState<IArea[]>([]),
+    [status, setStatus] = useState(0);
 
   function deleteArea(area: IArea) {
-    console.log("delete", area);
+    setStatus(0);
+    try {
+      fetch("/api/area", {
+        method: "DELETE",
+        body: JSON.stringify({ id: area.id }),
+        headers: { "Content-type": "application/json" },
+      }).then((result) => {
+        if (result.status === 201) {
+          setStatus(result.status);
+          alert("Område borttaget");
+        } else if (result.status === 400) {
+          alert("Ta bort växter ur området innan du raderar det");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -19,9 +36,8 @@ function Profile() {
       .then((response) => response.json())
       .then((result) => {
         setAreas(result);
-        console.log(result);
       });
-  }, []);
+  }, [status]);
 
   return (
     <section className="profile-page">
@@ -33,12 +49,10 @@ function Profile() {
         <div>
           <ul>
             {areas.map((area) => (
-              <div className="my-areas-list-row">
-                <li
-                  className="my-areas-list-row-item"
-                  key={area.id}>
-                  {area.name}
-                </li>
+              <div
+                className="my-areas-list-row"
+                key={area.id}>
+                <li className="my-areas-list-row-item">{area.name}</li>
                 <img
                   className="my-areas-trash-can"
                   src={TrashCan}
