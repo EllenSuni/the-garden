@@ -21,7 +21,6 @@ function Profile() {
       }).then((result) => {
         if (result.status === 201) {
           setStatus(result.status);
-          alert("Område borttaget");
         } else if (result.status === 400) {
           alert("Ta bort växter ur området innan du raderar det");
         }

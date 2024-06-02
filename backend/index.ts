@@ -189,7 +189,6 @@ app.delete("/api/area", async (request, response) => {
     if (rows.length === 1) {
       response.status(201).send();
     }
-    // response.status(201).send(rows);
   } catch (error) {
     response.status(400).send(error);
   }
